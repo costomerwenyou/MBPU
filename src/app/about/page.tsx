@@ -179,55 +179,83 @@ export default function About() {
           </div>
         </div>
 
-        {/* H2: Faculty */}
-        <div className="bg-muted/30 border border-border/50 rounded-3xl p-8 sm:p-12 mb-24">
-          <div className="max-w-3xl mx-auto mb-10 text-center">
-            <p className="text-sm font-extrabold uppercase tracking-widest text-secondary mb-3">Our Team</p>
-            <h2 className="text-3xl font-extrabold text-primary tracking-tight">
-              Experienced Faculty Dedicated to Student Success
+        {/* H2: Our Team / Leadership */}
+        <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-primary via-primary/95 to-primary text-white p-8 sm:p-14 mb-24 shadow-2xl">
+          {/* Subtle Grid Pattern Overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:28px_28px] opacity-40 pointer-events-none" />
+
+          {/* Ambient Glow Orbs */}
+          <div className="absolute -top-24 -left-24 w-80 h-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 max-w-3xl mx-auto mb-14 text-center">
+            <span className="inline-flex items-center space-x-2 bg-secondary/15 border border-secondary/30 text-secondary text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4">
+              <Award className="h-4 w-4" />
+              <span>Institutional Leadership</span>
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase">
+              Our Visionary Leadership &amp; Faculty
             </h2>
-            <p className="mt-4 text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
-              At the core of Maganur Basappa PU College&apos;s reputation is its team of highly qualified and experienced lecturers. The faculty is dedicated not only to imparting subject knowledge but also to fostering genuine curiosity and a lifelong passion for learning in every student. Personalized attention and mentorship help students build strong fundamentals across Science streams.
+            <p className="mt-4 text-sm sm:text-base text-white/80 font-light leading-relaxed">
+              At the core of Maganur Basappa P.U. Science College is an outstanding team of visionary educationalists and experienced lecturers committed to academic excellence, student mentorship, and holistic career guidance.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
             {leaders.map((leader, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-3xl border border-border/50 flex flex-col justify-between hover:shadow-xl transition-shadow relative"
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                className="bg-white/5 backdrop-blur-md border border-white/10 hover:border-secondary/50 rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 shadow-xl group relative overflow-hidden"
               >
-                <Quote className="absolute top-6 right-6 h-10 w-10 text-primary/5" />
+                {/* Decorative Top Accent Bar */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-secondary via-white/40 to-secondary opacity-80 group-hover:opacity-100 transition-opacity" />
+
+                <Quote className="absolute top-6 right-6 h-12 w-12 text-secondary/10 group-hover:text-secondary/20 transition-colors" />
+
                 <div>
+                  {/* Member Header */}
                   <div className="flex items-center space-x-4 mb-6">
-                    <img
-                      src={leader.photo}
-                      alt={`${leader.name} - ${leader.role}, Maganur Basappa PU College Davangere`}
-                      className="w-16 h-16 rounded-full object-cover border-2 border-secondary shadow-md"
-                    />
+                    <div className="relative">
+                      <div className="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-secondary to-white/40 shadow-lg">
+                        <img
+                          src={leader.photo}
+                          alt={`${leader.name} - ${leader.role}, Maganur Basappa P.U. Science College`}
+                          className="w-full h-full rounded-full object-cover"
+                        />
+                      </div>
+                    </div>
                     <div>
-                      <h4 className="font-bold text-primary text-lg">{leader.name}</h4>
-                      <p className="text-sm text-secondary font-semibold">{leader.role}</p>
+                      <h4 className="font-extrabold text-white text-lg group-hover:text-secondary transition-colors">
+                        {leader.name}
+                      </h4>
+                      <span className="inline-block mt-1 bg-secondary/20 border border-secondary/40 text-secondary text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-md">
+                        {leader.role}
+                      </span>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground italic leading-relaxed font-light">
+
+                  {/* Quote Body */}
+                  <p className="text-sm text-white/80 italic leading-relaxed font-light relative z-10">
                     &ldquo;{leader.quote}&rdquo;
                   </p>
                 </div>
-                <div className="flex items-center space-x-2 mt-6 pt-4 border-t border-border/40">
+
+                {/* Footer Tag */}
+                <div className="flex items-center space-x-2 mt-8 pt-4 border-t border-white/10 text-white/60">
                   <Award className="h-4 w-4 text-secondary" />
-                  <span className="text-xs font-semibold text-primary">
-                    MBPU College Leadership
+                  <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                    MBPU Executive Board
                   </span>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* H2: Why Choose Us */}
         <div className="mb-24">
