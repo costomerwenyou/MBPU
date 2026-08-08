@@ -63,7 +63,7 @@ const organizationSchema = {
     latitude: "14.4644",
     longitude: "75.9218",
   },
-  hasMap: "https://maps.google.com/?q=Taralabalu+Badavane+Davangere",
+  hasMap: "https://maps.app.goo.gl/2qpUQhqkBBpWAQnh6",
   foundingDate: "2005",
   numberOfStudents: "5000",
   knowsAbout: ["Pre University Education", "NEET Coaching", "JEE Coaching", "KCET Coaching", "Science Education"],

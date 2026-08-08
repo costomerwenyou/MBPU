@@ -277,6 +277,17 @@ export default function About() {
                   Karnataka, India
                 </address>
               </div>
+              <div className="mt-6">
+                <a
+                  href="https://maps.app.goo.gl/2qpUQhqkBBpWAQnh6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 bg-secondary text-primary font-extrabold text-xs uppercase tracking-wider px-6 py-3 rounded-full hover:bg-white transition-colors shadow-md"
+                >
+                  <MapPin className="h-4 w-4" />
+                  <span>Open in Google Maps</span>
+                </a>
+              </div>
             </div>
             <div className="rounded-2xl overflow-hidden border border-white/10 h-60 sm:h-72">
               <iframe

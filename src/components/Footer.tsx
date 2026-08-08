@@ -131,13 +131,18 @@ export default function Footer() {
             <ul className="space-y-3.5 text-sm text-white/70">
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-secondary flex-shrink-0 mt-0.5" />
-                <span>
+                <a
+                  href="https://maps.app.goo.gl/2qpUQhqkBBpWAQnh6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white hover:underline transition-all"
+                >
                   Maganur Basappa PU College,
                   <br />
                   Taralabalu Badavane, Vidyanagar,
                   <br />
                   Davangere, Karnataka – 577005
-                </span>
+                </a>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-secondary flex-shrink-0" />
