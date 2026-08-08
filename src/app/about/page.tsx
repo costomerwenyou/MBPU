@@ -118,7 +118,7 @@ export default function About() {
             className="relative h-[350px] sm:h-[450px] rounded-2xl overflow-hidden shadow-2xl"
           >
             <img
-              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80"
+              src="/RM403321.JPG"
               alt="Maganur Basappa PU College campus Davangere"
               className="object-cover w-full h-full"
             />
