@@ -271,10 +271,10 @@ export default function About() {
               <div className="flex items-start space-x-4 text-white/80">
                 <MapPin className="h-6 w-6 text-secondary shrink-0 mt-1" />
                 <address className="not-italic text-base leading-relaxed">
-                  <strong className="text-white font-bold block mb-1">Maganur Basappa PU College</strong>
-                  Taralabalu Badavane, Vidyanagar,<br />
-                  Davangere – 577005,<br />
-                  Karnataka, India
+                  <strong className="text-white font-bold block mb-1">Maganur Basappa P.U. Science College</strong>
+                  Basavamantapa, Taralabalu Extension,<br />
+                  Badavana, Vidyanagar, Davangere,<br />
+                  Karnataka 577005, India
                 </address>
               </div>
               <div className="mt-6">

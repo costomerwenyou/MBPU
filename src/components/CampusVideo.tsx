@@ -109,14 +109,14 @@ export default function CampusVideo() {
             </div>
 
             {/* Action CTA */}
-            <div className="pt-2">
+            {/* <div className="pt-2">
               <a
                 href="/admission"
                 className="inline-flex items-center justify-center bg-primary hover:bg-primary/95 text-white font-extrabold text-sm px-7 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 uppercase tracking-wider"
               >
                 Schedule Physical Visit
               </a>
-            </div>
+            </div> */}
           </div>
 
         </div>

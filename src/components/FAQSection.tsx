@@ -14,22 +14,22 @@ export default function FAQSection() {
 
   const faqs: FAQItem[] = [
     {
-      question: "Where is Maganur Basappa PU College located?",
+      question: "Where is Maganur Basappa P.U. Science College located?",
       answer:
-        "Maganur Basappa PU College (MBPU College) is located in Taralabalu Badavane, Vidyanagar, Davangere – 577005, Karnataka, India.",
+        "Maganur Basappa P.U. Science College is located at Basavamantapa, Taralabalu Extension, Badavana, Vidyanagar, Davangere, Karnataka 577005, India.",
     },
     {
-      question: "What combinations are offered at Maganur Basappa PU College?",
+      question: "What combinations are offered at Maganur Basappa P.U. Science College?",
       answer:
         "We offer two core science Pre-University combinations: PCMB (Physics, Chemistry, Mathematics, Biology) ideal for NEET/medical aspirants, and PCMCs (Physics, Chemistry, Mathematics, Computer Science) ideal for JEE/engineering aspirants.",
     },
     {
       question: "Does MBPU College provide integrated coaching for JEE, NEET, and KCET?",
       answer:
-        "Yes. Maganur Basappa PU College specialises in a fully integrated coaching model — board syllabus training is seamlessly combined with intensive preparation for JEE Mains & Advanced (IIT/NIT), NEET (MBBS/BDS), and KCET (state engineering/pharmacy) in a single daily schedule.",
+        "Yes. Maganur Basappa P.U. Science College specialises in a fully integrated coaching model — board syllabus training is seamlessly combined with intensive preparation for JEE Mains & Advanced (IIT/NIT), NEET (MBBS/BDS), and KCET (state engineering/pharmacy) in a single daily schedule.",
     },
     {
-      question: "What makes Maganur Basappa PU College one of the best PU colleges in Davangere?",
+      question: "What makes Maganur Basappa P.U. Science College one of the best PU colleges in Davangere?",
       answer:
         "Its experienced and highly qualified faculty, modern campus infrastructure, personalized student guidance, dedicated competitive exam coaching, and a 20+ year track record of academic excellence make it a top choice for PU education in Davangere and Karnataka.",
     },
@@ -39,9 +39,9 @@ export default function FAQSection() {
         "Yes, we support academic brilliance by offering merit-based scholarships and partial/full fee waivers to top-performing students scoring 95% and above in their SSLC, CBSE, or ICSE 10th standard board examinations.",
     },
     {
-      question: "How do I apply or enquire about admissions at Maganur Basappa PU College?",
+      question: "How do I apply or enquire about admissions at Maganur Basappa P.U. Science College?",
       answer:
-        "When admissions are active, you can apply directly through our Admission page enquiry form. You can also reach the college office directly by visiting the campus at Taralabalu Badavane, Vidyanagar, Davangere – 577005.",
+        "When admissions are active, you can apply directly through our Admission page enquiry form. You can also reach the college office directly by visiting the campus at Basavamantapa, Taralabalu Extension, Badavana, Vidyanagar, Davangere, Karnataka 577005.",
     },
   ];
 

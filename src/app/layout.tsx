@@ -45,14 +45,14 @@ export const metadata: Metadata = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "CollegeOrUniversity",
-  name: "Maganur Basappa PU College",
-  alternateName: "MBPU College",
+  name: "Maganur Basappa P.U. Science College",
+  alternateName: "MBPU Science College",
   url: "https://mbpucollege.in",
   description:
-    "Maganur Basappa Pre University College (MBPU College), Davangere - a top-rated Pre University College in Karnataka offering Science and Computer Science streams with integrated NEET, JEE, and KCET coaching.",
+    "Maganur Basappa P.U. Science College, Davangere - a top-rated Pre University College in Karnataka offering Science and Computer Science streams with integrated NEET, JEE, and KCET coaching.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Taralabalu Badavane, Vidyanagar",
+    streetAddress: "Basavamantapa, Taralabalu Extension, Badavana, Vidyanagar",
     addressLocality: "Davangere",
     addressRegion: "Karnataka",
     postalCode: "577005",

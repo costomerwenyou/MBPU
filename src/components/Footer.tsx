@@ -137,11 +137,13 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-white hover:underline transition-all"
                 >
-                  Maganur Basappa PU College,
+                  Maganur Basappa P.U. Science College,
                   <br />
-                  Taralabalu Badavane, Vidyanagar,
+                  Basavamantapa, Taralabalu Extension,
                   <br />
-                  Davangere, Karnataka – 577005
+                  Badavana, Vidyanagar, Davangere,
+                  <br />
+                  Karnataka 577005, India
                 </a>
               </li>
               <li className="flex items-center space-x-3">
