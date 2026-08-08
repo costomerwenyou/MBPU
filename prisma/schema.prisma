@@ -1,0 +1,51 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+}
+
+model News {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+}
+
+model Result {
+  id        String   @id @default(uuid())
+  name      String
+  photo     String   // base64 or path to uploaded image
+  score     String   // percentage or rank (e.g. 98.4%, Rank 12)
+  createdAt DateTime @default(now())
+}
+
+model GalleryItem {
+  id        String   @id @default(uuid())
+  url       String   // base64 or path to uploaded file
+  type      String   // "image" or "video"
+  category  String   // "Activity", "Sports", "Events"
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model Inquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  course    String
+  message   String
+  createdAt DateTime @default(now())
+}
