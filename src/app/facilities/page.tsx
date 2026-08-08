@@ -20,7 +20,7 @@ export default function Facilities() {
       description:
         "Spacious, highly equipped Physics, Chemistry, and Biology labs complying with board standards and competitive practical syllabi.",
       icon: FlaskConical,
-      image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
+      image: "/lab.JPG",
       className: "md:col-span-2 md:row-span-2",
     },
     {
@@ -28,7 +28,7 @@ export default function Facilities() {
       description:
         "A spacious hall with 500+ seating capacity and premium acoustics for hosting guest seminars, annual days, and cultural festivals.",
       icon: Tv,
-      image: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80",
+      image: "/auditorum.png",
       className: "md:col-span-1 md:row-span-1",
     },
     {
@@ -36,7 +36,7 @@ export default function Facilities() {
       description:
         "Safe, hygienic, and separate boarding accommodation for boys and girls with study halls, hot water, and nutritious food service.",
       icon: Home,
-      image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&h=800&q=80",
+      image: "/hostel1.JPG",
       className: "md:col-span-1 md:row-span-2",
     },
     {
@@ -44,7 +44,13 @@ export default function Facilities() {
       description:
         "Daily mindfulness and yoga sessions conducted by certified coaches to encourage stress relief and emotional wellbeing.",
       icon: Heart,
-      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80",
+      image: "/yoga.png",
+      className: "md:col-span-1 md:row-span-1",
+    },
+    {
+      isLogoCard: true,
+      title: "MBPU Science College",
+      description: "Moulding Brilliance, Shaping Careers",
       className: "md:col-span-1 md:row-span-1",
     },
     {
@@ -52,7 +58,7 @@ export default function Facilities() {
       description:
         "Interactive smart boards, high-speed Wi-Fi, and visual projection tools making learning highly engaging, concept-driven, and fun.",
       icon: Monitor,
-      image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=800&q=80",
+      image: "/class.JPG",
       className: "md:col-span-2 md:row-span-1",
     },
     {
@@ -68,7 +74,7 @@ export default function Facilities() {
       description:
         "A spacious open grass layout supporting outdoor physical education, assemblies, track sports, and recreation.",
       icon: TreePine,
-      image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=80",
+      image: "/ground.jpg",
       className: "md:col-span-2 md:row-span-1",
     },
     {
@@ -76,7 +82,7 @@ export default function Facilities() {
       description:
         "Indoor arena including Table Tennis, Chess, Carrom, and outdoor courts for Basketball and Volleyball.",
       icon: Trophy,
-      image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80",
+      image: "/sports.png",
       className: "md:col-span-1 md:row-span-1",
     },
   ];
@@ -109,7 +115,26 @@ export default function Facilities() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px] md:auto-rows-[300px]">
           {facilityItems.map((item, index) => {
-            const Icon = item.icon;
+            if (item.isLogoCard) {
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  className={`relative overflow-hidden rounded-3xl flex items-center justify-center p-4 text-center group ${item.className}`}
+                >
+                  <img
+                    src="/logo icon.png"
+                    alt="MB PU Science College Logo Icon"
+                    className="max-h-48 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500"
+                  />
+                </motion.div>
+              );
+            }
+
+            const Icon = item.icon!;
             return (
               <motion.div
                 key={index}

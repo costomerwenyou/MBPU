@@ -7,28 +7,28 @@ import Link from "next/link";
 
 const leaders = [
   {
-    name: "Sri. M. B. Patil",
-    role: "Secretary",
+    name: "Sharana Sangameshwara Gowdaru",
+    role: "Honorable Secretary of Maganur Basappa Public Trust",
     quote:
-      "Education is the most powerful weapon which you can use to change the world. At Maganur Basappa PU College, we provide the platform to hone your analytical minds and build a prosperous, responsible career.",
+      "Welcome to Maganur Basappa PU College, where we are committed to fostering academic excellence, holistic development, and strong values in our students. Our mission is to provide a dynamic learning environment that empowers students to reach their full potential, both academically and personally, while preparing them for future success. With a dedicated faculty, comprehensive curriculum, and emphasis on extracurricular activities, we aim to nurture responsible, innovative, and well-rounded individuals. We invite you to explore our college and join us in this journey of growth, learning, and achievement.",
     photo:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80",
+      "/Secretary.jpg",
   },
   {
-    name: "Dr. Sandeep Patil",
+    name: "Dr. G.N.H.Kumar (M.A, Ph.D)",
     role: "Director",
     quote:
-      "Integrated academic approaches prepare students not just for today's board exams, but for tomorrow's national competitive milestones. Our systems are built around academic rigour and personal growth.",
+      "Welcome to Maganur Basappa PU College! Our goal is to provide students with a nurturing environment where they can thrive academically, socially, and personally. We focus on delivering a strong educational foundation while promoting critical thinking, creativity, and ethical values. With an emphasis on both academic rigor and extracurricular development, we strive to prepare our students for the challenges of tomorrow. At Maganur Basappa, we believe that every student has the potential to excel and make a positive impact on society. I encourage you to explore our programs and become part of a community that fosters growth, leadership, and excellence.",
     photo:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80",
+      "/Director.jpg",
   },
   {
-    name: "Prof. Anupama R.",
+    name: "Dr. Prasad Bangera S",
     role: "Principal",
     quote:
-      "Every student is a bundle of infinite possibilities. Our dedicated faculty members are committed to providing personalized guidance to unfold this latent brilliance and help you succeed.",
+      "Welcome to Maganur Basappa PU College, where academic excellence and personal growth go hand in hand. As the principal, I am proud to lead an institution that is dedicated to shaping the future of our students through quality education, innovation, and character development. We strive to provide a comprehensive learning experience that not only prepares students for higher education but also helps them become responsible, well-rounded individuals ready to face the challenges of the world. With a team of passionate educators and a focus on both scholastic and co-scholastic activities, we ensure that every student’s potential is nurtured.",
     photo:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80",
+      "/principle.jpg",
   },
 ];
 
@@ -62,26 +62,32 @@ const whyChooseUs = [
 export default function About() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header Banner */}
+      {/* Minimalistic Header Banner with Old Dark Primary Background */}
       <section className="bg-primary text-white py-16 relative overflow-hidden mb-16">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          {/* H1 — used once per page as recommended */}
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl sm:text-5xl font-extrabold tracking-tight"
+            className="text-xs font-black uppercase tracking-[0.25em] text-secondary inline-block mb-3"
           >
-            Maganur Basappa PU College, Davangere —{" "}
-            <span className="text-secondary">Shaping Bright Futures</span> in Karnataka
+            About MBPU Science College
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight"
+          >
+            Shaping Bright Futures in Karnataka
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-4 text-lg text-white/80 max-w-3xl mx-auto font-light leading-relaxed"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-4 text-base sm:text-lg text-white/80 font-light leading-relaxed max-w-2xl mx-auto"
           >
-            Maganur Basappa Pre University College (MBPU College), located in the heart of Taralabalu Badavane, Davangere, stands as one of the leading Pre University colleges in the region — a preferred choice for parents and students searching for the best PU college in Davangere and Karnataka.
+            Maganur Basappa P.U. Science College is a premier institution in Davangere, dedicated to academic rigour, holistic student growth, and competitive excellence.
           </motion.p>
         </div>
       </section>
@@ -179,81 +185,69 @@ export default function About() {
           </div>
         </div>
 
-        {/* H2: Our Team / Leadership */}
-        <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-primary via-primary/95 to-primary text-white p-8 sm:p-14 mb-24 shadow-2xl">
-          {/* Subtle Grid Pattern Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:28px_28px] opacity-40 pointer-events-none" />
-
-          {/* Ambient Glow Orbs */}
-          <div className="absolute -top-24 -left-24 w-80 h-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 max-w-3xl mx-auto mb-14 text-center">
-            <span className="inline-flex items-center space-x-2 bg-secondary/15 border border-secondary/30 text-secondary text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4">
-              <Award className="h-4 w-4" />
-              <span>Institutional Leadership</span>
+        {/* H2: Our Team - Exact 2-Column Reference Layout */}
+        <section className="mb-24 space-y-12">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-secondary bg-secondary/10 border border-secondary/20 px-4 py-1.5 rounded-full inline-block mb-3">
+              Leadership &amp; Mentorship
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase">
-              Our Visionary Leadership &amp; Faculty
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight uppercase">
+              Our Visionary Leadership Team
             </h2>
-            <p className="mt-4 text-sm sm:text-base text-white/80 font-light leading-relaxed">
-              At the core of Maganur Basappa P.U. Science College is an outstanding team of visionary educationalists and experienced lecturers committed to academic excellence, student mentorship, and holistic career guidance.
+            <p className="mt-3 text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
+              Meet the educational leaders guiding Maganur Basappa P.U. Science College towards academic excellence and student success across Karnataka.
             </p>
           </div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {leaders.map((leader, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.12 }}
-                className="bg-white/5 backdrop-blur-md border border-white/10 hover:border-secondary/50 rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 shadow-xl group relative overflow-hidden"
-              >
-                {/* Decorative Top Accent Bar */}
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-secondary via-white/40 to-secondary opacity-80 group-hover:opacity-100 transition-opacity" />
+          <div className="space-y-10 max-w-6xl mx-auto">
+            {leaders.map((leader, index) => {
+              const bgColors = [
+                "bg-gradient-to-tr from-secondary via-amber-400 to-yellow-500",
+                "bg-gradient-to-tr from-primary via-blue-700 to-sky-500",
+                "bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500",
+              ];
+              const isEven = index % 2 === 0;
 
-                <Quote className="absolute top-6 right-6 h-12 w-12 text-secondary/10 group-hover:text-secondary/20 transition-colors" />
-
-                <div>
-                  {/* Member Header */}
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="relative">
-                      <div className="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-secondary to-white/40 shadow-lg">
-                        <img
-                          src={leader.photo}
-                          alt={`${leader.name} - ${leader.role}, Maganur Basappa P.U. Science College`}
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-[#f8f9fa] border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-sm hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center overflow-hidden"
+                >
+                  {/* Left Column: Bold Title + Quote Text */}
+                  <div className={`lg:col-span-7 space-y-5 ${isEven ? "lg:order-1" : "lg:order-2"}`}>
+                    <div className="inline-block bg-primary/10 border border-primary/20 text-primary text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full">
+                      {leader.role} — Leadership
                     </div>
-                    <div>
-                      <h4 className="font-extrabold text-white text-lg group-hover:text-secondary transition-colors">
-                        {leader.name}
-                      </h4>
-                      <span className="inline-block mt-1 bg-secondary/20 border border-secondary/40 text-secondary text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-md">
-                        {leader.role}
-                      </span>
-                    </div>
+                    <h3 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-snug">
+                      {leader.name}
+                    </h3>
+                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                      &ldquo;{leader.quote}&rdquo;
+                    </p>
                   </div>
 
-                  {/* Quote Body */}
-                  <p className="text-sm text-white/80 italic leading-relaxed font-light relative z-10">
-                    &ldquo;{leader.quote}&rdquo;
-                  </p>
-                </div>
-
-                {/* Footer Tag */}
-                <div className="flex items-center space-x-2 mt-8 pt-4 border-t border-white/10 text-white/60">
-                  <Award className="h-4 w-4 text-secondary" />
-                  <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                    MBPU Executive Board
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+                  {/* Right Column: Rotated Diamond Shape + Portrait Cutout */}
+                  <div className={`lg:col-span-5 flex items-center justify-center relative py-6 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
+                    <div className="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+                      {/* Rotated Diamond Background Shape */}
+                      <div
+                        className={`absolute inset-0 ${bgColors[index % bgColors.length]} rounded-[2.5rem] rotate-45 shadow-lg transition-transform duration-500 hover:rotate-[50deg] hover:scale-105`}
+                      />
+                      {/* Cutout Image Layered Over Shape */}
+                      <img
+                        src={leader.photo}
+                        alt={`${leader.name} - ${leader.role}, Maganur Basappa P.U. Science College`}
+                        className="relative z-10 w-56 h-56 sm:w-64 sm:h-64 object-cover rounded-2xl shadow-2xl border-4 border-white"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 
@@ -319,11 +313,11 @@ export default function About() {
             </div>
             <div className="rounded-2xl overflow-hidden border border-white/10 h-60 sm:h-72">
               <iframe
-                title="Maganur Basappa PU College Davangere location map"
-                src="https://maps.google.com/maps?q=Taralabalu+Badavane+Vidyanagar+Davangere+577005&output=embed"
+                title="Maganur Basappa P.U. Science College Davangere location map"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3209.753722626625!2d75.91854529999999!3d14.4399089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bba2541ebe0eabd%3A0x9d4a5ca1ccae4217!2sMaganur%20Basappa%20P.U.%20Science%20College!5e1!3m2!1sen!2sin!4v1786212874614!5m2!1sen!2sin"
                 className="w-full h-full border-0"
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           </div>

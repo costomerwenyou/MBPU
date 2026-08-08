@@ -16,7 +16,7 @@ export default function Gallery() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "Activity", "Sports", "Events"];
+  const categories = ["All", "Hostel", "College", "Class", "Activity", "Sports", "Events"];
 
   useEffect(() => {
     async function fetchGallery() {
@@ -37,6 +37,60 @@ export default function Gallery() {
 
   const defaultItems: GalleryItem[] = [
     {
+      id: "h1",
+      category: "Hostel",
+      type: "image",
+      url: "/hostel1.JPG",
+    },
+    {
+      id: "h2",
+      category: "Hostel",
+      type: "image",
+      url: "/hostel2.JPG",
+    },
+    {
+      id: "c1",
+      category: "College",
+      type: "image",
+      url: "/RM403321.JPG",
+    },
+    {
+      id: "c2",
+      category: "College",
+      type: "image",
+      url: "/auditorum.png",
+    },
+    {
+      id: "cl1",
+      category: "Class",
+      type: "image",
+      url: "/class.JPG",
+    },
+    {
+      id: "cl2",
+      category: "Class",
+      type: "image",
+      url: "/lab.JPG",
+    },
+    {
+      id: "s1",
+      category: "Sports",
+      type: "image",
+      url: "/sports.png",
+    },
+    {
+      id: "s2",
+      category: "Sports",
+      type: "image",
+      url: "/ground.jpg",
+    },
+    {
+      id: "a1",
+      category: "Activity",
+      type: "image",
+      url: "/yoga.png",
+    },
+    {
       id: "1",
       category: "Activity",
       type: "image",
@@ -53,36 +107,6 @@ export default function Gallery() {
       category: "Events",
       type: "image",
       url: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: "4",
-      category: "Activity",
-      type: "image",
-      url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: "5",
-      category: "Sports",
-      type: "image",
-      url: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: "6",
-      category: "Events",
-      type: "image",
-      url: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: "7",
-      category: "Activity",
-      type: "video",
-      url: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: "8",
-      category: "Events",
-      type: "video",
-      url: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80",
     },
   ];
 

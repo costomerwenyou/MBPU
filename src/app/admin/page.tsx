@@ -12,15 +12,27 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  // Fetch all CMS database records on the server
-  const settings = await db.setting.findMany();
-  const news = await db.news.findMany({ orderBy: { createdAt: "desc" } });
-  const results = await db.result.findMany({ orderBy: { createdAt: "desc" } });
-  const gallery = await db.galleryItem.findMany({ orderBy: { createdAt: "desc" } });
-  const inquiries = await db.inquiry.findMany({ orderBy: { createdAt: "desc" } });
+  // Fetch all CMS database records on the server safely
+  let settings: any[] = [];
+  let news: any[] = [];
+  let results: any[] = [];
+  let gallery: any[] = [];
+  let inquiries: any[] = [];
+
+  try {
+    [settings, news, results, gallery, inquiries] = await Promise.all([
+      db.setting.findMany(),
+      db.news.findMany({ orderBy: { createdAt: "desc" } }),
+      db.result.findMany({ orderBy: { createdAt: "desc" } }),
+      db.galleryItem.findMany({ orderBy: { createdAt: "desc" } }),
+      db.inquiry.findMany({ orderBy: { createdAt: "desc" } }),
+    ]);
+  } catch (error) {
+    console.error("Database connection warning in /admin:", error);
+  }
 
   // Map settings array to a clean key-value object
-  const settingsMap = settings.reduce((acc, curr) => {
+  const settingsMap = settings.reduce((acc: Record<string, string>, curr: any) => {
     acc[curr.key] = curr.value;
     return acc;
   }, {} as Record<string, string>);

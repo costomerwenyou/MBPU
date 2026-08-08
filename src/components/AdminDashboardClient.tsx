@@ -668,6 +668,9 @@ export default function AdminDashboardClient({
                       onChange={(e) => setGalleryCategory(e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-border text-sm focus:outline-none focus:border-secondary transition-colors bg-white font-medium"
                     >
+                      <option value="Hostel">Hostel</option>
+                      <option value="College">College</option>
+                      <option value="Class">Class</option>
                       <option value="Activity">Activity</option>
                       <option value="Sports">Sports</option>
                       <option value="Events">Events</option>
