@@ -1,46 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Target, Compass, Flag, Award, Quote, MapPin, ChevronDown, CheckCircle2 } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import { Target, Compass, Flag, Award, Quote, MapPin, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-
-const faqItems = [
-  {
-    q: "Where is Maganur Basappa PU College located?",
-    a: "Maganur Basappa PU College is located in Taralabalu Badavane, Vidyanagar, in the heart of Davangere, Karnataka – 577005.",
-  },
-  {
-    q: "What streams does Maganur Basappa PU College offer?",
-    a: "The college offers Pre University education with a strong focus on the Science stream — PCMB (Physics, Chemistry, Mathematics, Biology) and PCMCs (Physics, Chemistry, Mathematics, Computer Science) — along with dedicated support for competitive exams such as NEET, JEE, and KCET.",
-  },
-  {
-    q: "What makes Maganur Basappa PU College one of the best PU colleges in Davangere?",
-    a: "Its experienced faculty, modern campus facilities, personalized student guidance, and dedicated competitive exam coaching make it a top choice for PU education in Davangere and across Karnataka.",
-  },
-  {
-    q: "What is the mission of Maganur Basappa PU College?",
-    a: "The college's mission is to provide a nurturing, innovative educational environment that combines academic rigour, personal growth, and skill development, supported by experienced faculty and modern facilities.",
-  },
-  {
-    q: "What is the vision of Maganur Basappa PU College?",
-    a: "The vision is to become a premier institution in Karnataka that fosters holistic development, helping students explore their talents, achieve academic excellence, and become responsible members of society.",
-  },
-  {
-    q: "How does Maganur Basappa PU College support student development beyond academics?",
-    a: "The college focuses on creativity, critical thinking, and collaboration, alongside ongoing mentorship and extracurricular opportunities, to support each student's personal and academic growth.",
-  },
-];
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
-};
 
 const leaders = [
   {
@@ -97,16 +60,8 @@ const whyChooseUs = [
 ];
 
 export default function About() {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-
   return (
     <div className="min-h-screen bg-white">
-      {/* FAQ Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       {/* Header Banner */}
       <section className="bg-primary text-white py-16 relative overflow-hidden mb-16">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40" />
@@ -353,53 +308,6 @@ export default function About() {
                 View Courses
               </button>
             </Link>
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mb-20">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm font-extrabold uppercase tracking-widest text-secondary mb-3">FAQ</p>
-            <h2 className="text-3xl font-extrabold text-primary tracking-tight">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          <div className="max-w-3xl mx-auto space-y-4">
-            {faqItems.map((item, i) => {
-              const isOpen = openFAQ === i;
-              return (
-                <div
-                  key={i}
-                  className="bg-white border border-border/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <button
-                    onClick={() => setOpenFAQ(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none cursor-pointer"
-                    aria-expanded={isOpen}
-                  >
-                    <span className="font-bold text-primary text-sm sm:text-base pr-4">{item.q}</span>
-                    <ChevronDown
-                      className={`h-5 w-5 text-secondary shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                      >
-                        <div className="px-6 pb-6 pt-1 text-sm text-muted-foreground border-t border-border/10 leading-relaxed font-light">
-                          {item.a}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
           </div>
         </div>
 
