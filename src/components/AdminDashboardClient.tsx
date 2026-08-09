@@ -79,7 +79,7 @@ export default function AdminDashboardClient({
   const [topperFile, setTopperFile] = useState<File | null>(null);
   const [galleryCategory, setGalleryCategory] = useState("Activity");
   const [galleryType, setGalleryType] = useState("image");
-  const [galleryFile, setGalleryFile] = useState<File | null>(null);
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
 
   // Status/Loading indicators
   const [loading, setLoading] = useState(false);
@@ -232,34 +232,53 @@ export default function AdminDashboardClient({
     }
   };
 
-  // Add Gallery item
+  // Add Gallery item(s)
   const handleAddGallery = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!galleryFile) {
-      showNotification("Please select a file to upload.", true);
+    if (galleryFiles.length === 0) {
+      showNotification("Please select at least one file to upload.", true);
       return;
     }
 
     setLoading(true);
     try {
-      const fileUrl = await uploadFile(galleryFile);
+      const formData = new FormData();
+      galleryFiles.forEach((file) => formData.append("files", file));
+
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadRes.ok) throw new Error("Upload failed");
+      const uploadData = await uploadRes.json();
+      const uploadedUrls: string[] = uploadData.urls || [uploadData.url];
+
+      const itemsToCreate = uploadedUrls.map((url) => ({
+        url,
+        type: galleryType,
+        category: galleryCategory,
+      }));
 
       const res = await fetch("/api/admin/gallery", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: fileUrl, type: galleryType, category: galleryCategory }),
+        body: JSON.stringify({ items: itemsToCreate }),
       });
 
       if (res.ok) {
         const data = await res.json();
-        setGallery([data.galleryItem, ...gallery]);
-        setGalleryFile(null);
-        showNotification("Gallery item uploaded successfully.");
+        const newItems: GalleryItem[] = data.galleryItems || (data.galleryItem ? [data.galleryItem] : []);
+        setGallery([...newItems, ...gallery]);
+        setGalleryFiles([]);
+        showNotification(
+          `Successfully uploaded ${newItems.length} gallery item${newItems.length > 1 ? "s" : ""}.`
+        );
       } else {
-        showNotification("Failed to upload gallery item.", true);
+        showNotification("Failed to upload gallery item(s).", true);
       }
     } catch (err) {
-      showNotification("Error uploading gallery item.", true);
+      showNotification("Error uploading gallery item(s).", true);
     } finally {
       setLoading(false);
     }
@@ -655,7 +674,7 @@ export default function AdminDashboardClient({
           <section className="space-y-8">
             <div className="bg-white border border-border p-6 sm:p-8 rounded-3xl shadow-xl">
               <h2 className="text-xl font-bold text-primary mb-4 uppercase tracking-wide">
-                Upload Gallery Item
+                Upload Gallery Items
               </h2>
               <form onSubmit={handleAddGallery} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -685,7 +704,7 @@ export default function AdminDashboardClient({
                       onChange={(e) => setGalleryType(e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-border text-sm focus:outline-none focus:border-secondary transition-colors bg-white font-medium"
                     >
-                      <option value="image">Image</option>
+                      <option value="image">Image(s)</option>
                       <option value="video">Video / Play Clip</option>
                     </select>
                   </div>
@@ -693,33 +712,69 @@ export default function AdminDashboardClient({
 
                 <div>
                   <label className="block text-xs font-bold text-primary uppercase tracking-wider mb-1.5">
-                    Select Media File
+                    Select Media File(s) (Multiple selection allowed)
                   </label>
-                  <div className="flex items-center space-x-3.5">
-                    <label className="flex items-center space-x-2 px-4 py-3 bg-muted hover:bg-muted-foreground/10 text-primary font-bold text-xs uppercase tracking-wider rounded-xl border border-border cursor-pointer transition-colors">
-                      <Upload className="h-4.5 w-4.5" />
-                      <span>{galleryFile ? "Change file" : "Select File"}</span>
-                      <input
-                        type="file"
-                        accept={galleryType === "image" ? "image/*" : "video/*"}
-                        required
-                        onChange={(e) => setGalleryFile(e.target.files?.[0] || null)}
-                        className="hidden"
-                      />
-                    </label>
-                    <span className="text-xs text-muted-foreground truncate">
-                      {galleryFile ? galleryFile.name : "No file selected"}
-                    </span>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3.5">
+                      <label className="flex items-center space-x-2 px-4 py-3 bg-muted hover:bg-muted-foreground/10 text-primary font-bold text-xs uppercase tracking-wider rounded-xl border border-border cursor-pointer transition-colors">
+                        <Upload className="h-4.5 w-4.5" />
+                        <span>{galleryFiles.length > 0 ? "Add / Change Files" : "Select Files"}</span>
+                        <input
+                          type="file"
+                          multiple
+                          accept={galleryType === "image" ? "image/*" : "video/*"}
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files.length > 0) {
+                              setGalleryFiles(Array.from(e.target.files));
+                            }
+                          }}
+                          className="hidden"
+                        />
+                      </label>
+                      <span className="text-xs text-muted-foreground font-medium">
+                        {galleryFiles.length > 0
+                          ? `${galleryFiles.length} file(s) selected`
+                          : "No files selected"}
+                      </span>
+                    </div>
+
+                    {/* Selected files list */}
+                    {galleryFiles.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-2 border-t border-border/60">
+                        {galleryFiles.map((file, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center space-x-2 bg-muted/60 text-primary text-xs px-3 py-1.5 rounded-lg border border-border"
+                          >
+                            <span className="truncate max-w-[180px] font-medium">{file.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => setGalleryFiles(galleryFiles.filter((_, i) => i !== idx))}
+                              className="text-muted-foreground hover:text-red-500 font-bold px-1"
+                              title="Remove file"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="bg-primary text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-secondary hover:text-primary transition-colors cursor-pointer inline-flex items-center space-x-1.5"
+                  disabled={loading || galleryFiles.length === 0}
+                  className="bg-primary text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-secondary hover:text-primary transition-colors cursor-pointer inline-flex items-center space-x-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Plus className="h-4 w-4" />
-                  <span>Upload Item</span>
+                  <span>
+                    {loading
+                      ? `Uploading ${galleryFiles.length} item(s)...`
+                      : `Upload ${galleryFiles.length > 0 ? galleryFiles.length : ""} Item${
+                          galleryFiles.length > 1 ? "s" : ""
+                        }`}
+                  </span>
                 </button>
               </form>
             </div>

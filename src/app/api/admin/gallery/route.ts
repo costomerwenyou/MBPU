@@ -10,7 +10,31 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { url, type, category } = await request.json();
+    const body = await request.json();
+
+    if (Array.isArray(body.items)) {
+      const validItems = body.items.filter(
+        (item: { url?: string; type?: string; category?: string }) =>
+          item.url && item.type && item.category
+      );
+
+      if (validItems.length === 0) {
+        return NextResponse.json({ error: "No valid items provided" }, { status: 400 });
+      }
+
+      await db.galleryItem.createMany({
+        data: validItems,
+      });
+
+      const createdItems = await db.galleryItem.findMany({
+        orderBy: { createdAt: "desc" },
+        take: validItems.length,
+      });
+
+      return NextResponse.json({ success: true, galleryItems: createdItems });
+    }
+
+    const { url, type, category } = body;
     if (!url || !type || !category) {
       return NextResponse.json(
         { error: "URL, type, and category are required fields" },
