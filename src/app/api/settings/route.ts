@@ -13,6 +13,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Failed to fetch settings:", error);
-    return NextResponse.json({ isAdmissionOpen: false }, { status: 500 });
+    return NextResponse.json({ isAdmissionOpen: false }, { status: 200 });
   }
 }

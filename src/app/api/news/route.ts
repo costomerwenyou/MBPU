@@ -11,6 +11,6 @@ export async function GET() {
     return NextResponse.json(news);
   } catch (error) {
     console.error("Failed to fetch news:", error);
-    return NextResponse.json({ error: "Failed to fetch news" }, { status: 500 });
+    return NextResponse.json([], { status: 200 });
   }
 }
