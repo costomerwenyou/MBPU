@@ -7,7 +7,13 @@ import AdminDashboardClient from "@/components/AdminDashboardClient";
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (error) {
+    console.error("Session check warning in /admin:", error);
+  }
+
   if (!session) {
     redirect("/admin/login");
   }
