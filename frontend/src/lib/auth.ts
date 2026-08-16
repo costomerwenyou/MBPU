@@ -1,7 +1,5 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import { db } from "./db";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -16,27 +14,24 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        const user = await db.user.findUnique({
-          where: { username: credentials.username },
-        });
+        try {
+          const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          const res = await fetch(`${baseUrl}/api/admin/verify-credentials`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: credentials.username,
+              password: credentials.password,
+            }),
+          });
 
-        if (!user) {
+          if (!res.ok) return null;
+          const user = await res.json();
+          return user;
+        } catch (error) {
+          console.error("Auth error:", error);
           return null;
         }
-
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (!isPasswordValid) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          name: user.username,
-        };
       },
     }),
   ],
@@ -63,4 +58,3 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET || "mb-pu-college-cms-secret-key-f94jf30fd",
 };
-

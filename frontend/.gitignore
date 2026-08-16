@@ -1,16 +1,14 @@
 # Dependencies
 node_modules/
-**/node_modules/
 /.pnp
 .pnp.js
 
-# Build & Compiled output
-.next/
-**/.next/
-dist/
-**/dist/
+# Next.js
+/.next/
 /out/
-/build/
+
+# Production build
+/build
 
 # Environment files
 .env
@@ -22,8 +20,6 @@ dist/
 # Prisma local database
 prisma/dev.db
 prisma/dev.db-journal
-backend/prisma/dev.db
-backend/prisma/dev.db-journal
 
 # Misc
 .DS_Store

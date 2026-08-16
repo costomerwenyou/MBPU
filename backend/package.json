@@ -1,0 +1,29 @@
+{
+  "name": "mb-pu-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node node_modules/ts-node-dev/lib/bin.js --respawn --transpile-only src/server.ts",
+    "build": "node node_modules/prisma/build/index.js generate --schema=./prisma/schema.prisma && node node_modules/typescript/bin/tsc",
+    "start": "node dist/server.js",
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "~6.19.3",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^20.17.19",
+    "prisma": "~6.19.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
