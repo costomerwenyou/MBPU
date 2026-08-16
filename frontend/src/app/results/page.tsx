@@ -138,6 +138,7 @@ export default function Results() {
                       <img
                         src={topper.photo}
                         alt={topper.name}
+                        loading="lazy"
                         className="object-cover w-full h-full"
                       />
                     </div>

@@ -241,6 +241,7 @@ export default function About() {
                       <img
                         src={leader.photo}
                         alt={`${leader.name} - ${leader.role}, Maganur Basappa P.U. Science College`}
+                        loading="lazy"
                         className="relative z-10 w-56 h-56 sm:w-64 sm:h-64 object-cover rounded-2xl shadow-2xl border-4 border-white"
                       />
                     </div>

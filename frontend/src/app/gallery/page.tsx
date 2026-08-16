@@ -185,6 +185,7 @@ export default function Gallery() {
                   <img
                     src={item.url}
                     alt={`${item.category} item`}
+                    loading="lazy"
                     className="object-cover w-full h-auto max-h-[500px]"
                   />
 
