@@ -15,7 +15,7 @@ export const authOptions: AuthOptions = {
         }
 
         try {
-          const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          const baseUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
           const res = await fetch(`${baseUrl}/api/admin/verify-credentials`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
