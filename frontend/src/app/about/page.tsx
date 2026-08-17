@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Target, Compass, Flag, Award, Quote, MapPin, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import SafeImage from "@/components/SafeImage";
 
 const leaders = [
   {
@@ -238,10 +239,9 @@ export default function About() {
                         className={`absolute inset-0 ${bgColors[index % bgColors.length]} rounded-[2.5rem] rotate-45 shadow-lg transition-transform duration-500 hover:rotate-[50deg] hover:scale-105`}
                       />
                       {/* Cutout Image Layered Over Shape */}
-                      <img
+                      <SafeImage
                         src={leader.photo}
                         alt={`${leader.name} - ${leader.role}, Maganur Basappa P.U. Science College`}
-                        loading="lazy"
                         className="relative z-10 w-56 h-56 sm:w-64 sm:h-64 object-cover rounded-2xl shadow-2xl border-4 border-white"
                       />
                     </div>

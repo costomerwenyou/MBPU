@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "npx prisma generate --schema=./prisma/schema.prisma && npx tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "node node_modules/prisma/build/index.js generate --schema=./prisma/schema.prisma && node node_modules/typescript/bin/tsc",
     "start": "node dist/server.js",
     "seed": "node prisma/seed.js"
   },

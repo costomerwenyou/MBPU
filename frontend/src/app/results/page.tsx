@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Award, Star } from "lucide-react";
+import SafeImage from "@/components/SafeImage";
 
 interface Topper {
   id: string;
@@ -135,10 +136,9 @@ export default function Results() {
                     className="inline-block bg-muted/30 border border-border/80 rounded-2xl p-5 w-[220px] sm:w-[260px] shrink-0 text-center shadow-sm hover:shadow-lg hover:border-secondary/35 transition-all duration-300 group"
                   >
                     <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4 rounded-full overflow-hidden border-2 border-secondary shadow-md group-hover:scale-105 transition-transform duration-300">
-                      <img
+                      <SafeImage
                         src={topper.photo}
                         alt={topper.name}
-                        loading="lazy"
                         className="object-cover w-full h-full"
                       />
                     </div>

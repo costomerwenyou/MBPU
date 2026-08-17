@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Image as ImageIcon, Video, Play, Filter } from "lucide-react";
+import SafeImage from "@/components/SafeImage";
 
 interface GalleryItem {
   id: string;
@@ -182,10 +183,9 @@ export default function Gallery() {
                   transition={{ duration: 0.4 }}
                   className="relative group rounded-3xl overflow-hidden shadow-md border border-border bg-muted/20 break-inside-avoid"
                 >
-                  <img
+                  <SafeImage
                     src={item.url}
                     alt={`${item.category} item`}
-                    loading="lazy"
                     className="object-cover w-full h-auto max-h-[500px]"
                   />
 
