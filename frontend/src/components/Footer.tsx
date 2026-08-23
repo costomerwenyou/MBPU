@@ -118,7 +118,7 @@ export default function Footer() {
               <li>PCMCs (Physics, Chemistry, Mathematics, Computer Science)</li>
               <li className="pt-2 border-t border-white/10 mt-2">
                 <span className="text-secondary font-semibold block">Integrated Coaching:</span>
-                NEET, JEE Mains & Advanced, KCET/JEE preparation.
+                KCET, NEET, JEE Mains & Advanced.
               </li>
             </ul>
           </div>

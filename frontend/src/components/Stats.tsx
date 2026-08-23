@@ -13,7 +13,7 @@ export default function Stats() {
       icon: Users,
     },
     {
-      value: "98.22%",
+      value: "99.02%",
       label: "Board Pass Rate",
       description: "Consistent top-tier academic performance",
       icon: Percent,
@@ -31,7 +31,7 @@ export default function Stats() {
       icon: Trophy,
     },
     {
-      value: "100+",
+      value: "200+",
       label: "JEE Rankings",
       description: "JEE qualifiers heading to IITs & NITs",
       icon: Award,

@@ -12,9 +12,9 @@ module.exports = {
     {
       name: 'mb-pu-frontend',
       cwd: './frontend',
-      script: 'npm',
+      script: 'node_modules/next/dist/bin/next',
       args: 'start',
-      interpreter: 'none',
+      interpreter: 'node',
       env: {
         NODE_ENV: 'production',
         PORT: 3000

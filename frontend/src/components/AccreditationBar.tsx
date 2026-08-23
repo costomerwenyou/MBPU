@@ -21,7 +21,7 @@ export default function AccreditationBar() {
       icon: GraduationCap,
     },
     {
-      title: "NTA Prep Partner",
+      title: "Exams Prep Partner",
       desc: "JEE & NEET integrated centers",
       icon: CheckSquare,
     },
