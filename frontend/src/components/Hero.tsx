@@ -267,65 +267,107 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Side: Single Person Continuous Topper Showcase Console (Transparent / Frameless) */}
+          {/* Right Side: Single Person Continuous Topper Showcase Console (Modern Glassmorphic Card) */}
           <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-full max-w-xs sm:max-w-sm rounded-3xl p-2 bg-transparent overflow-hidden group"
+              className="relative w-full max-w-xs sm:max-w-sm rounded-3xl p-5 bg-white/10 backdrop-blur-xl border border-white/15 shadow-2xl overflow-hidden group hover:border-secondary/30 transition-all duration-500"
             >
-              {/* Toppers Console Header Tag */}
-              <div className="flex items-center justify-between px-3 py-2 bg-transparent border-b border-white/15 mb-3">
-                <div className="flex items-center space-x-1.5">
-                  <Trophy className="h-3.5 w-3.5 text-secondary" />
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-white">
+              {/* Subtle background ambient glow element */}
+              <div className="absolute -top-16 -right-16 w-44 h-44 bg-secondary/20 rounded-full blur-3xl group-hover:bg-secondary/35 transition-all duration-700 pointer-events-none" />
+
+              {/* Toppers Console Header Bar */}
+              <div className="flex items-center justify-between pb-3 border-b border-white/15 mb-4 relative z-10">
+                <div className="flex items-center space-x-2">
+                  <div className="p-1.5 rounded-lg bg-secondary/20 text-secondary border border-secondary/30">
+                    <Trophy className="h-4 w-4" />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-wider text-white">
                     Star Topper Spotlight
                   </span>
                 </div>
-                <Link
-                  href="/results"
-                  className="text-[10px] font-bold text-secondary hover:text-white flex items-center space-x-1 transition-colors"
-                >
-                  <span>View All</span>
-                  <ExternalLink className="h-3 w-3" />
-                </Link>
+                <div className="flex items-center space-x-1.5">
+                  {/* Prev/Next manual controls */}
+                  <button
+                    onClick={handlePrev}
+                    className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                    aria-label="Previous topper"
+                  >
+                    <ChevronLeft className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    onClick={handleNext}
+                    className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                    aria-label="Next topper"
+                  >
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
+                  <Link
+                    href="/results"
+                    className="text-[11px] font-bold text-secondary hover:text-white flex items-center space-x-0.5 transition-colors ml-1"
+                  >
+                    <span>All</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </Link>
+                </div>
               </div>
 
-              {/* Single Person Auto-Rotating Card Container */}
-              <div className="relative overflow-hidden rounded-2xl bg-transparent p-2 text-center">
+              {/* Single Person Auto-Rotating Card Content */}
+              <div className="relative overflow-hidden rounded-2xl p-1 text-center z-10">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentTopper.id || currentIndex}
-                    initial={{ opacity: 0, x: 15, scale: 0.95 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -15, scale: 0.95 }}
-                    transition={{ duration: 0.35 }}
+                    initial={{ opacity: 0, scale: 0.94, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.94, y: -10 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
                     className="flex flex-col items-center"
                   >
-                    {/* Single Person Image Frame */}
-                    <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-secondary via-accent to-secondary shadow-lg mb-3 group-hover:scale-105 transition-transform duration-500">
-                      <SafeImage
-                        src={currentTopper.photo || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&h=400&q=80"}
-                        alt={currentTopper.name}
-                        className="w-full h-full object-cover rounded-full"
-                        containerClassName="w-full h-full rounded-full"
-                      />
+                    {/* Modern Rectangular Photo Frame */}
+                    <div className="relative w-44 h-56 sm:w-48 sm:h-60 rounded-2xl p-1.5 bg-gradient-to-br from-secondary via-accent to-secondary/80 shadow-[0_12px_35px_rgba(0,0,0,0.4)] mb-4 group-hover:scale-[1.02] transition-transform duration-500">
+                      <div className="relative w-full h-full rounded-xl overflow-hidden bg-black/40">
+                        <SafeImage
+                          src={currentTopper.photo || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&h=600&q=80"}
+                          alt={currentTopper.name}
+                          className="w-full h-full object-cover rounded-xl"
+                          containerClassName="w-full h-full rounded-xl"
+                        />
+                        {/* Soft Gradient Shadow Overlay for depth */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                      </div>
+
                       {/* Top Rank Badge */}
-                      <div className="absolute -bottom-2 inset-x-0 mx-auto w-max bg-secondary text-primary font-extrabold text-[9px] sm:text-[10px] px-2.5 py-0.5 rounded-full shadow-md">
-                        {"badge" in currentTopper ? (currentTopper as any).badge : "🏆 Rank Holder"}
+                      <div className="absolute -bottom-3 inset-x-0 mx-auto w-max bg-secondary text-primary font-black text-xs px-3.5 py-1 rounded-full shadow-xl border border-white/40 flex items-center space-x-1.5 z-20 uppercase tracking-wider">
+                        <Award className="h-3.5 w-3.5 fill-current" />
+                        <span>{"badge" in currentTopper ? (currentTopper as any).badge : "🏆 Rank Holder"}</span>
                       </div>
                     </div>
 
                     {/* Single Person Name & Score Details */}
-                    <h3 className="text-base sm:text-lg font-extrabold text-white tracking-tight mt-1">
+                    <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight mt-2">
                       {currentTopper.name}
                     </h3>
-                    <p className="text-xs sm:text-sm font-black text-secondary mt-0.5">
+                    <p className="text-xs sm:text-sm font-black text-secondary mt-0.5 tracking-wide">
                       {currentTopper.score}
                     </p>
                   </motion.div>
                 </AnimatePresence>
+
+                {/* Modern Indicator Dots */}
+                <div className="flex items-center justify-center space-x-1.5 mt-4 pt-2">
+                  {activeToppers.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentIndex(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        i === currentIndex ? "w-6 bg-secondary" : "w-1.5 bg-white/30 hover:bg-white/50"
+                      }`}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
