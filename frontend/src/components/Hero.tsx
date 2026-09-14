@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   Trophy,
@@ -19,15 +19,60 @@ interface TopperItem {
   id: string;
   name: string;
   score: string;
+  badge?: string;
   photo?: string;
 }
+
+type CardPosition =
+  | "center"
+  | "left-1"
+  | "left-2"
+  | "right-1"
+  | "right-2"
+  | "hidden";
+
+function getCardPosition(
+  cardIndex: number,
+  currentIndex: number,
+  total: number
+): CardPosition {
+  const offset = (cardIndex - currentIndex + total) % total;
+  if (offset === 0) return "center";
+  if (offset === 1) return "right-1";
+  if (offset === 2) return "right-2";
+  if (offset === total - 1) return "left-1";
+  if (offset === total - 2) return "left-2";
+  return "hidden";
+}
+
+const cardTransforms: Record<CardPosition, string> = {
+  center: "scale(1.08) translateZ(0)",
+  "left-2": "translateX(-240px) scale(0.75) translateZ(-250px)",
+  "left-1": "translateX(-130px) scale(0.88) translateZ(-100px)",
+  "right-1": "translateX(130px) scale(0.88) translateZ(-100px)",
+  "right-2": "translateX(240px) scale(0.75) translateZ(-250px)",
+  hidden: "translateX(0) scale(0.7) translateZ(-300px)",
+};
+
+const cardTransformsMobile: Record<CardPosition, string> = {
+  center: "scale(1.05) translateZ(0)",
+  "left-2": "translateX(-180px) scale(0.72) translateZ(-250px)",
+  "left-1": "translateX(-95px) scale(0.85) translateZ(-100px)",
+  "right-1": "translateX(95px) scale(0.85) translateZ(-100px)",
+  "right-2": "translateX(180px) scale(0.72) translateZ(-250px)",
+  hidden: "translateX(0) scale(0.7) translateZ(-300px)",
+};
 
 export default function Hero() {
   const [isAdmissionOpen, setIsAdmissionOpen] = useState(false);
   const [toppersList, setToppersList] = useState<TopperItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStartX = useRef(0);
 
-  const defaultToppers = [
+  const defaultToppers: TopperItem[] = [
     {
       id: "1",
       name: "Aditya Hegde",
@@ -63,6 +108,13 @@ export default function Hero() {
       badge: "🥇 KCET Top 10",
       photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80",
     },
+    {
+      id: "6",
+      name: "Julia Gimmel",
+      score: "97.6% - Commerce Topper",
+      badge: "🏅 State Rank 5",
+      photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    },
   ];
 
   useEffect(() => {
@@ -97,28 +149,82 @@ export default function Hero() {
   }, []);
 
   const activeToppers = toppersList.length > 0 ? toppersList : defaultToppers;
+  const total = activeToppers.length;
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const goTo = useCallback(
+    (newIndex: number) => {
+      if (isAnimating || total === 0) return;
+      setIsAnimating(true);
+      const normalized = (newIndex + total) % total;
+      setCurrentIndex(normalized);
+
+      const nameTimer = setTimeout(() => {
+        setDisplayIndex(normalized);
+      }, 300);
+
+      const animTimer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 800);
+
+      return () => {
+        clearTimeout(nameTimer);
+        clearTimeout(animTimer);
+      };
+    },
+    [isAnimating, total]
+  );
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") goTo(currentIndex - 1);
+      else if (e.key === "ArrowRight") goTo(currentIndex + 1);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [currentIndex, goTo]);
 
   // Continuous auto-rotation every 3.5 seconds
   useEffect(() => {
-    if (activeToppers.length <= 1) return;
+    if (total <= 1) return;
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % activeToppers.length);
+      goTo(currentIndex + 1);
     }, 3500);
     return () => clearInterval(timer);
-  }, [activeToppers.length]);
+  }, [total, currentIndex, goTo]);
 
-  const currentTopper = activeToppers[currentIndex] || defaultToppers[0];
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % activeToppers.length);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.changedTouches[0].screenX;
   };
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + activeToppers.length) % activeToppers.length);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX.current - touchEndX;
+    const swipeThreshold = 50;
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) goTo(currentIndex + 1);
+      else goTo(currentIndex - 1);
+    }
   };
+
+  const activeTopper = activeToppers[displayIndex] || activeToppers[0];
+  const transforms = isMobile ? cardTransformsMobile : cardTransforms;
+  const cardSize = isMobile
+    ? { width: 170, height: 240 }
+    : { width: 220, height: 300 };
+
+  const nameLineWidth = isMobile ? 40 : 70;
+  const nameLineOffset = isMobile ? 55 : 90;
 
   return (
-    <section className="relative min-h-[88vh] flex items-center overflow-hidden bg-primary text-white py-16 lg:py-24">
+    <section className="relative min-h-[88vh] flex items-center overflow-hidden bg-primary text-white py-14 lg:py-20">
       {/* Background Image with Dark Gradient Overlay */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-35 scale-105 transition-all duration-[10s]"
@@ -163,10 +269,10 @@ export default function Hero() {
 
       {/* Hero 2-Column Grid Layout */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
           {/* Left Side: Content & Action Buttons */}
-          <div className="lg:col-span-8 text-left space-y-8">
+          <div className="lg:col-span-6 text-left space-y-7">
             <motion.div
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -267,107 +373,152 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Side: Single Person Continuous Topper Showcase Console (Modern Glassmorphic Card) */}
-          <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
+          {/* Right Side: Star Topper Spotlight - 3D Perspective Team Carousel */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-full max-w-xs sm:max-w-sm rounded-3xl p-5 bg-white/10 backdrop-blur-xl border border-white/15 shadow-2xl overflow-hidden group hover:border-secondary/30 transition-all duration-500"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative w-full max-w-lg rounded-3xl p-4 sm:p-6 bg-transparent border-0 shadow-none overflow-hidden group transition-all duration-500 flex flex-col items-center justify-center text-center"
             >
               {/* Subtle background ambient glow element */}
-              <div className="absolute -top-16 -right-16 w-44 h-44 bg-secondary/20 rounded-full blur-3xl group-hover:bg-secondary/35 transition-all duration-700 pointer-events-none" />
+              <div className="absolute -top-16 -right-16 w-48 h-48 bg-secondary/20 rounded-full blur-3xl group-hover:bg-secondary/35 transition-all duration-700 pointer-events-none" />
 
-              {/* Toppers Console Header Bar */}
-              <div className="flex items-center justify-between pb-3 border-b border-white/15 mb-4 relative z-10">
-                <div className="flex items-center space-x-2">
-                  <div className="p-1.5 rounded-lg bg-secondary/20 text-secondary border border-secondary/30">
-                    <Trophy className="h-4 w-4" />
-                  </div>
-                  <span className="text-xs font-black uppercase tracking-wider text-white">
-                    Star Topper Spotlight
-                  </span>
+
+              {/* 3D Track */}
+              <div className="w-full relative h-[360px] sm:h-[390px] flex items-center justify-center perspective-[1000px]">
+                <button
+                  onClick={() => goTo(currentIndex - 1)}
+                  aria-label="Previous topper"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-900/75 hover:bg-amber-500 hover:text-slate-950 border border-white/20 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer z-20 text-xl transition-all shadow-lg backdrop-blur-md"
+                >
+                  ‹
+                </button>
+
+                <div className="w-full h-full flex justify-center items-center relative transform-style-3d transition-transform duration-800 cubic-bezier">
+                  {activeToppers.map((topper, i) => {
+                    const position = getCardPosition(i, currentIndex, total);
+                    const isHidden = position === "hidden";
+                    const zIndex =
+                      position === "center"
+                        ? 10
+                        : position === "left-1" || position === "right-1"
+                          ? 5
+                          : 1;
+                    const opacity = isHidden
+                      ? 0
+                      : position === "center"
+                        ? 1
+                        : position === "left-1" || position === "right-1"
+                          ? 0.88
+                          : 0.65;
+
+                    return (
+                      <div
+                        key={topper.id || topper.name}
+                        onClick={() => goTo(i)}
+                        style={{
+                          position: "absolute",
+                          width: cardSize.width,
+                          height: cardSize.height,
+                          background: "transparent",
+                          backdropFilter: "blur(12px)",
+                          border: position === "center"
+                            ? "2px solid rgba(245, 158, 11, 0.7)"
+                            : "1px solid rgba(255, 255, 255, 0.2)",
+                          borderRadius: 20,
+                          overflow: "hidden",
+                          boxShadow: position === "center"
+                            ? "0 25px 50px rgba(245, 158, 11, 0.25), 0 15px 35px rgba(0, 0, 0, 0.5)"
+                            : "0 20px 40px rgba(0, 0, 0, 0.25)",
+                          transition: "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                          cursor: "pointer",
+                          zIndex,
+                          opacity,
+                          pointerEvents: isHidden ? "none" : "auto",
+                          transform: transforms[position],
+                        }}
+                      >
+                        {topper.badge && (
+                          <div className="absolute top-2.5 right-2.5 bg-slate-950/85 text-amber-400 font-extrabold text-[10px] px-2.5 py-1 rounded-full border border-amber-400/40 backdrop-blur-md z-12 shadow-md">
+                            {topper.badge}
+                          </div>
+                        )}
+                        <SafeImage
+                          src={topper.photo || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&h=600&q=80"}
+                          alt={topper.name}
+                          className="w-full h-full object-cover"
+                          containerClassName="w-full h-full"
+                          style={{
+                            filter: position === "center" ? "none" : "grayscale(100%)",
+                            transition: "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="flex items-center space-x-1.5">
-                  {/* Prev/Next manual controls */}
-                  <button
-                    onClick={handlePrev}
-                    className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                    aria-label="Previous topper"
-                  >
-                    <ChevronLeft className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                    aria-label="Next topper"
-                  >
-                    <ChevronRight className="h-3.5 w-3.5" />
-                  </button>
-                  <Link
-                    href="/results"
-                    className="text-[11px] font-bold text-secondary hover:text-white flex items-center space-x-0.5 transition-colors ml-1"
-                  >
-                    <span>All</span>
-                    <ExternalLink className="h-3 w-3" />
-                  </Link>
-                </div>
+
+                <button
+                  onClick={() => goTo(currentIndex + 1)}
+                  aria-label="Next topper"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-900/75 hover:bg-amber-500 hover:text-slate-950 border border-white/20 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer z-20 text-xl transition-all shadow-lg backdrop-blur-md"
+                >
+                  ›
+                </button>
               </div>
 
-              {/* Single Person Auto-Rotating Card Content */}
-              <div className="relative overflow-hidden rounded-2xl p-1 text-center z-10">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentTopper.id || currentIndex}
-                    initial={{ opacity: 0, scale: 0.94, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.94, y: -10 }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="flex flex-col items-center"
-                  >
-                    {/* Modern Rectangular Photo Frame */}
-                    <div className="relative w-44 h-56 sm:w-48 sm:h-60 rounded-2xl p-1.5 bg-gradient-to-br from-secondary via-accent to-secondary/80 shadow-[0_12px_35px_rgba(0,0,0,0.4)] mb-4 group-hover:scale-[1.02] transition-transform duration-500">
-                      <div className="relative w-full h-full rounded-xl overflow-hidden bg-black/40">
-                        <SafeImage
-                          src={currentTopper.photo || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&h=600&q=80"}
-                          alt={currentTopper.name}
-                          className="w-full h-full object-cover rounded-xl"
-                          containerClassName="w-full h-full rounded-xl"
-                        />
-                        {/* Soft Gradient Shadow Overlay for depth */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                      </div>
+              {/* Active Topper Details */}
+              <div className="text-center mt-5 relative z-10">
+                <h2
+                  className="text-xl sm:text-2xl font-extrabold text-white tracking-tight relative inline-block mb-1"
+                  style={{
+                    opacity: isAnimating ? 0 : 1,
+                    transition: "opacity 0.5s ease-out",
+                  }}
+                >
+                  <span
+                    className="absolute top-full h-0.5 bg-secondary"
+                    style={{
+                      left: -nameLineOffset,
+                      width: nameLineWidth,
+                    }}
+                  />
+                  {activeTopper.name}
+                  <span
+                    className="absolute top-full h-0.5 bg-secondary"
+                    style={{
+                      right: -nameLineOffset,
+                      width: nameLineWidth,
+                    }}
+                  />
+                </h2>
+                <p
+                  className="text-xs sm:text-sm font-bold text-secondary uppercase tracking-[0.1em] pt-1"
+                  style={{
+                    opacity: isAnimating ? 0 : 0.95,
+                    transition: "opacity 0.5s ease-out",
+                  }}
+                >
+                  {activeTopper.score}
+                </p>
+              </div>
 
-                      {/* Top Rank Badge */}
-                      <div className="absolute -bottom-3 inset-x-0 mx-auto w-max bg-secondary text-primary font-black text-xs px-3.5 py-1 rounded-full shadow-xl border border-white/40 flex items-center space-x-1.5 z-20 uppercase tracking-wider">
-                        <Award className="h-3.5 w-3.5 fill-current" />
-                        <span>{"badge" in currentTopper ? (currentTopper as any).badge : "🏆 Rank Holder"}</span>
-                      </div>
-                    </div>
-
-                    {/* Single Person Name & Score Details */}
-                    <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight mt-2">
-                      {currentTopper.name}
-                    </h3>
-                    <p className="text-xs sm:text-sm font-black text-secondary mt-0.5 tracking-wide">
-                      {currentTopper.score}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Modern Indicator Dots */}
-                <div className="flex items-center justify-center space-x-1.5 mt-4 pt-2">
-                  {activeToppers.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentIndex(i)}
-                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                        i === currentIndex ? "w-6 bg-secondary" : "w-1.5 bg-white/30 hover:bg-white/50"
+              {/* Pagination Dots */}
+              <div className="flex justify-center gap-2 mt-5 relative z-10">
+                {activeToppers.map((_, i) => (
+                  <div
+                    key={i}
+                    onClick={() => goTo(i)}
+                    aria-label={`Go to topper ${i + 1}`}
+                    className={`h-2.5 rounded-full cursor-pointer transition-all duration-300 ${i === currentIndex
+                      ? "w-6 bg-secondary shadow-[0_0_10px_rgba(245,158,11,0.6)]"
+                      : "w-2.5 bg-white/25 hover:bg-white/50"
                       }`}
-                      aria-label={`Go to slide ${i + 1}`}
-                    />
-                  ))}
-                </div>
+                  />
+                ))}
               </div>
             </motion.div>
           </div>

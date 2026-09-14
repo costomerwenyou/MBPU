@@ -3,17 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
-  
-  --primary: #0f172a; /* Deep collegiate Navy Blue */
+
+  --primary: #0f172a;
+  /* Deep collegiate Navy Blue */
   --primary-foreground: #ffffff;
-  
-  --secondary: #d97706; /* Academic Gold */
+
+  --secondary: #d97706;
+  /* Academic Gold */
   --secondary-foreground: #0f172a;
-  
+
   --accent: #f59e0b;
   --muted: #f1f5f9;
   --muted-foreground: #475569;
-  
+
   --border: #e2e8f0;
 }
 
@@ -42,7 +44,7 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
-  
+
   .glassmorphism-dark {
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(10px);
@@ -55,6 +57,7 @@ body {
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -82,13 +85,16 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--muted);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
