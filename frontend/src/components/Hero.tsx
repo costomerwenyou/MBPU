@@ -78,42 +78,42 @@ export default function Hero() {
       name: "Aditya Hegde",
       score: "98.8% - PCMCs Topper",
       badge: "🏆 1st Rank PCMCs",
-      photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&h=600&q=80",
+      photo: "/s1.jpeg",
     },
     {
       id: "2",
       name: "Neha R. Rao",
       score: "98.4% - PCMB Topper",
       badge: "⭐ State Board Top 10",
-      photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&h=600&q=80",
+      photo: "/s2.jpeg",
     },
     {
       id: "3",
       name: "Rahul Sharma",
       score: "JEE Advanced AIR 124",
       badge: "🎯 IIT Qualifier",
-      photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&h=600&q=80",
+      photo: "/s3.jpeg",
     },
     {
       id: "4",
       name: "Sanjana Gowda",
       score: "NEET 710 / 720",
       badge: "🩺 NEET Top Ranker",
-      photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&h=600&q=80",
+      photo: "/s1.jpeg",
     },
     {
       id: "5",
       name: "Karthik Nair",
       score: "KCET Rank 8",
       badge: "🥇 KCET Top 10",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80",
+      photo: "/s2.jpeg",
     },
     {
       id: "6",
       name: "Julia Gimmel",
       score: "97.6% - Commerce Topper",
       badge: "🏅 State Rank 5",
-      photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      photo: "/s3.jpeg",
     },
   ];
 
@@ -339,7 +339,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.55 }}
-              className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4"
+              className="pt-6 grid grid-cols-3 gap-4"
             >
               <div className="flex items-center space-x-2.5">
                 <div className="p-2 rounded-lg bg-white/10 text-secondary">
@@ -383,9 +383,6 @@ export default function Hero() {
               onTouchEnd={handleTouchEnd}
               className="relative w-full max-w-lg rounded-3xl p-4 sm:p-6 bg-transparent border-0 shadow-none overflow-hidden group transition-all duration-500 flex flex-col items-center justify-center text-center"
             >
-              {/* Subtle background ambient glow element */}
-              <div className="absolute -top-16 -right-16 w-48 h-48 bg-secondary/20 rounded-full blur-3xl group-hover:bg-secondary/35 transition-all duration-700 pointer-events-none" />
-
 
               {/* 3D Track */}
               <div className="w-full relative h-[360px] sm:h-[390px] flex items-center justify-center perspective-[1000px]">
@@ -425,9 +422,7 @@ export default function Hero() {
                           height: cardSize.height,
                           background: "transparent",
                           backdropFilter: "blur(12px)",
-                          border: position === "center"
-                            ? "2px solid rgba(245, 158, 11, 0.7)"
-                            : "1px solid rgba(255, 255, 255, 0.2)",
+                          border: "none",
                           borderRadius: 20,
                           overflow: "hidden",
                           boxShadow: position === "center"
@@ -447,7 +442,8 @@ export default function Hero() {
                           </div>
                         )}
                         <SafeImage
-                          src={topper.photo || "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&h=600&q=80"}
+                          src={topper.photo || ["/s1.jpeg", "/s2.jpeg", "/s3.jpeg"][i % 3]}
+                          fallbackSrc={["/s1.jpeg", "/s2.jpeg", "/s3.jpeg"][i % 3]}
                           alt={topper.name}
                           className="w-full h-full object-cover"
                           containerClassName="w-full h-full"
