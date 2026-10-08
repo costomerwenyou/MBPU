@@ -164,8 +164,8 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/50 space-y-3 sm:space-y-0">
           <p>© {new Date().getFullYear()} MB Pre-University College. All rights reserved.</p>
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-white transition-all">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-all">Terms of Service</a>
+            <Link href="/privacy" className="hover:text-white transition-all">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-all">Terms of Service</Link>
             <Link href="/admin" className="hover:text-white transition-all underline">Admin CMS Login</Link>
           </div>
         </div>

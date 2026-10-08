@@ -18,8 +18,8 @@ async function main() {
   console.log("Seeded setting:", admissionSetting);
 
   // Seed default admin
-  const adminUsername = "admin";
-  const adminPassword = "Admin@123";
+  const adminUsername = process.env.ADMIN_SEED_USER || "admin";
+  const adminPassword = process.env.ADMIN_SEED_PASSWORD || "Admin@MBPU#2026";
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
   const adminUser = await prisma.user.upsert({

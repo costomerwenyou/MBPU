@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node node_modules/ts-node-dev/lib/bin.js --respawn --transpile-only src/server.ts",
-    "build": "prisma generate --schema=./prisma/schema.prisma && tsc",
+    "build": "node node_modules/typescript/bin/tsc",
     "start": "node dist/server.js",
     "seed": "node prisma/seed.js"
   },
