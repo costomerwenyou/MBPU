@@ -214,14 +214,11 @@ export default function Hero() {
     }
   };
 
-  const activeTopper = activeToppers[displayIndex] || activeToppers[0];
   const transforms = isMobile ? cardTransformsMobile : cardTransforms;
   const cardSize = isMobile
     ? { width: 170, height: 240 }
     : { width: 220, height: 300 };
 
-  const nameLineWidth = isMobile ? 40 : 70;
-  const nameLineOffset = isMobile ? 55 : 90;
 
   return (
     <section className="relative min-h-[88vh] flex items-center overflow-hidden bg-primary text-white py-14 lg:py-20">
@@ -466,41 +463,6 @@ export default function Hero() {
                 </button>
               </div>
 
-              {/* Active Topper Details */}
-              <div className="text-center mt-5 relative z-10">
-                <h2
-                  className="text-xl sm:text-2xl font-extrabold text-white tracking-tight relative inline-block mb-1"
-                  style={{
-                    opacity: isAnimating ? 0 : 1,
-                    transition: "opacity 0.5s ease-out",
-                  }}
-                >
-                  <span
-                    className="absolute top-full h-0.5 bg-secondary"
-                    style={{
-                      left: -nameLineOffset,
-                      width: nameLineWidth,
-                    }}
-                  />
-                  {activeTopper.name}
-                  <span
-                    className="absolute top-full h-0.5 bg-secondary"
-                    style={{
-                      right: -nameLineOffset,
-                      width: nameLineWidth,
-                    }}
-                  />
-                </h2>
-                <p
-                  className="text-xs sm:text-sm font-bold text-secondary uppercase tracking-[0.1em] pt-1"
-                  style={{
-                    opacity: isAnimating ? 0 : 0.95,
-                    transition: "opacity 0.5s ease-out",
-                  }}
-                >
-                  {activeTopper.score}
-                </p>
-              </div>
 
               {/* Pagination Dots */}
               <div className="flex justify-center gap-2 mt-5 relative z-10">
