@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 async function fetchApi(endpoint: string) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const baseUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://mbpu.onrender.com";
     const res = await fetch(`${baseUrl}${endpoint}`, { next: { revalidate: 10 } });
     if (!res.ok) return null;
     return await res.json();

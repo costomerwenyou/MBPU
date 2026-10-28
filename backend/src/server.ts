@@ -14,6 +14,8 @@ app.disable("x-powered-by");
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:5000",
+  "https://mbpu.vercel.app",
+  "https://mbpu.onrender.com",
   process.env.FRONTEND_URL,
   process.env.NEXTAUTH_URL,
 ].filter(Boolean) as string[];
@@ -21,13 +23,20 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Allow server-to-server and same-origin rewrites
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app") ||
+        origin.endsWith(".onrender.com")
+      ) {
+        return callback(null, true);
       }
+      return callback(null, true);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+    optionsSuccessStatus: 200,
   })
 );
 
