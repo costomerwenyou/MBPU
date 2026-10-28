@@ -16,6 +16,8 @@ const allowedOrigins = [
   "http://localhost:5000",
   "https://mbpu.vercel.app",
   "https://mbpu.onrender.com",
+  "https://www.mbpucollege.in",
+  "https://mbpucollege.in",
   process.env.FRONTEND_URL,
   process.env.NEXTAUTH_URL,
 ].filter(Boolean) as string[];
@@ -27,7 +29,8 @@ app.use(
       if (
         allowedOrigins.includes(origin) ||
         origin.endsWith(".vercel.app") ||
-        origin.endsWith(".onrender.com")
+        origin.endsWith(".onrender.com") ||
+        origin.endsWith("mbpucollege.in")
       ) {
         return callback(null, true);
       }
