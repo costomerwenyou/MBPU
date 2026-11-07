@@ -11,7 +11,6 @@ import {
   X,
   CheckCircle2,
   Percent,
-  ChevronRight,
   Medal,
   Zap,
 } from "lucide-react";
@@ -273,8 +272,8 @@ export default function Results() {
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               className={`px-5 py-2.5 rounded-full font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer ${activeCategory === cat.id
-                  ? "bg-primary text-secondary shadow-lg shadow-primary/20 scale-105"
-                  : "bg-white text-muted-foreground hover:bg-muted hover:text-primary border border-border"
+                ? "bg-primary text-secondary shadow-lg shadow-primary/20 scale-105"
+                : "bg-white text-muted-foreground hover:bg-muted hover:text-primary border border-border"
                 }`}
             >
               {cat.label}
@@ -345,35 +344,13 @@ export default function Results() {
                     </div>
 
                     {/* Card Content Details */}
-                    <div className="p-6 flex-1 flex flex-col justify-between bg-white">
-                      <div>
-                        <h3 className="text-xl font-extrabold text-primary tracking-tight uppercase group-hover:text-secondary transition-colors">
-                          {topper.name}
-                        </h3>
-                        <p className="text-sm font-bold text-amber-600 mt-1 uppercase tracking-wide">
-                          {topper.score}
-                        </p>
-                      </div>
-
-                      <div className="mt-5 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground font-medium">
-                        <span className="flex items-center space-x-1">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                          <span>Verified Performance</span>
-                        </span>
-                        <button
-                          onClick={() =>
-                            setSelectedImage({
-                              src: imgSrc,
-                              title: topper.name,
-                              score: topper.score,
-                            })
-                          }
-                          className="text-primary font-bold hover:text-secondary flex items-center space-x-1 transition-colors cursor-pointer"
-                        >
-                          <span>Preview</span>
-                          <ChevronRight className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
+                    <div className="p-6 bg-white">
+                      <h3 className="text-xl font-extrabold text-primary tracking-tight uppercase group-hover:text-secondary transition-colors">
+                        {topper.name}
+                      </h3>
+                      <p className="text-sm font-bold text-amber-600 mt-1 uppercase tracking-wide">
+                        {topper.score}
+                      </p>
                     </div>
                   </motion.div>
                 );

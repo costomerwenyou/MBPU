@@ -19,6 +19,14 @@ export const metadata: Metadata = {
   title: "Maganur Basappa PU College Davangere | Best PU College",
   description:
     "Maganur Basappa PU College (MBPU College), Davangere - a top-rated Pre University College in Karnataka offering Science and Computer Science with expert faculty.",
+  icons: {
+    icon: [
+      { url: "/MB%20PU%20Logo.png" },
+      { url: "/mb-pu-logo.png" },
+    ],
+    shortcut: "/MB%20PU%20Logo.png",
+    apple: "/MB%20PU%20Logo.png",
+  },
   keywords: [
     "Maganur Basappa PU College",
     "MBPU College",
@@ -77,6 +85,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        <link rel="icon" href="/MB%20PU%20Logo.png" />
+        <link rel="apple-touch-icon" href="/MB%20PU%20Logo.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
