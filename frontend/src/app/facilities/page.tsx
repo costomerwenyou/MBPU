@@ -66,7 +66,7 @@ export default function Facilities() {
       description:
         "Dedicated formal workspace for group projects, panel interviews, faculty meetings, and presentations.",
       icon: Users,
-      image: "https://images.unsplash.com/photo-1517502884422-41eaaced0168?auto=format&fit=crop&w=600&q=80",
+      image: "/conference.jpeg",
       className: "md:col-span-1 md:row-span-1",
     },
     {
