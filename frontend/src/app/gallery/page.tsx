@@ -125,7 +125,7 @@ export default function Gallery() {
         ) : (
           <motion.div
             layout
-            className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence mode="popLayout">
               {displayedItems.map((item) => (
@@ -136,13 +136,13 @@ export default function Gallery() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}
-                  className="relative group rounded-3xl overflow-hidden shadow-md border border-border bg-muted/20 break-inside-avoid"
+                  className="relative group rounded-3xl overflow-hidden shadow-md border border-border bg-muted/20 aspect-[4/3]"
                 >
                   <SafeImage
                     src={item.url}
                     fallbackSrc="/RM403321.JPG"
                     alt={`${item.category} item`}
-                    className="object-cover w-full h-auto max-h-[500px]"
+                    className="object-cover w-full h-full"
                   />
 
                   {/* Hover Info Overlay */}
