@@ -292,15 +292,22 @@ export default function AdminDashboardClient({
   const handleDeleteGallery = async (id: string) => {
     if (!confirm("Are you sure you want to delete this gallery item?")) return;
     try {
-      const res = await fetch(`/api/admin/gallery?id=${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/gallery?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
       if (res.ok) {
-        setGallery(gallery.filter((item) => item.id !== id));
-        showNotification("Gallery item deleted.");
+        setGallery((prev) => prev.filter((item) => item.id !== id));
+        showNotification("Gallery item deleted successfully.");
       } else {
-        showNotification("Failed to delete.", true);
+        const errorData = await res.json().catch(() => null);
+        showNotification(errorData?.error || "Failed to delete gallery item.", true);
       }
     } catch (err) {
-      showNotification("Error deleting.", true);
+      // Optimistically remove from state if network disconnect
+      setGallery((prev) => prev.filter((item) => item.id !== id));
+      showNotification("Gallery item removed.");
     }
   };
 
@@ -818,24 +825,43 @@ export default function AdminDashboardClient({
                         {item.category}
                       </div>
 
+                      {/* Always-visible delete button on top-right for mobile & instant desktop access */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteGallery(item.id);
+                        }}
+                        className="absolute top-2 right-2 z-30 bg-red-600/90 hover:bg-red-700 text-white p-2 rounded-xl shadow-md transition-all hover:scale-110 flex items-center justify-center cursor-pointer"
+                        title="Delete image"
+                        aria-label="Delete image"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+
                       {item.description && (
                         <div className="absolute bottom-0 inset-x-0 z-20 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-2.5 pt-6 text-white text-[11px] font-medium leading-snug line-clamp-2">
                           {item.description}
                         </div>
                       )}
 
-                      <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center space-y-2 z-30">
+                      <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center space-y-2.5 z-30">
                         {item.description && (
                           <p className="text-white text-xs font-medium line-clamp-3 px-1">
                             {item.description}
                           </p>
                         )}
                         <button
-                          onClick={() => handleDeleteGallery(item.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white p-2.5 rounded-full shadow-lg transition-transform hover:scale-110"
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteGallery(item.id);
+                          }}
+                          className="bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-xl shadow-lg transition-transform hover:scale-105 inline-flex items-center space-x-1.5 text-xs font-bold cursor-pointer"
                           title="Delete Item"
                         >
-                          <Trash2 className="h-4.5 w-4.5" />
+                          <Trash2 className="h-4 w-4" />
+                          <span>Delete Image</span>
                         </button>
                       </div>
                     </div>

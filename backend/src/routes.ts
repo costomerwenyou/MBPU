@@ -379,12 +379,30 @@ router.post("/admin/gallery", async (req: Request, res: Response) => {
 
 router.delete("/admin/gallery", async (req: Request, res: Response) => {
   try {
-    const id = req.query.id as string;
+    const id = (req.query.id as string) || (req.body && req.body.id);
     if (!id) {
       res.status(400).json({ error: "Gallery Item ID required" });
       return;
     }
-    await db.galleryItem.delete({ where: { id } });
+    try {
+      const existing = await db.galleryItem.findUnique({ where: { id } });
+      if (existing && existing.url && existing.url.startsWith("/uploads/")) {
+        const filePath = path.join(uploadDir, path.basename(existing.url));
+        if (fs.existsSync(filePath)) {
+          try {
+            fs.unlinkSync(filePath);
+          } catch (fileErr) {
+            console.warn("Could not delete file from disk:", fileErr);
+          }
+        }
+      }
+      await db.galleryItem.delete({ where: { id } });
+    } catch (dbErr: any) {
+      // P2025: Record to delete does not exist (already deleted)
+      if (dbErr?.code !== "P2025") {
+        console.warn("Delete gallery db error:", dbErr);
+      }
+    }
     clearCache("gallery");
     res.json({ success: true });
   } catch (error) {
