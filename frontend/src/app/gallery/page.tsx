@@ -43,72 +43,84 @@ export default function Gallery() {
       category: "Hostel",
       type: "image",
       url: "/hostel1.JPG",
+      description: "Hostel Facility & Student Rooms",
     },
     {
       id: "h2",
       category: "Hostel",
       type: "image",
       url: "/hostel2.JPG",
+      description: "Clean & Spacious Hostel Amenities",
     },
     {
       id: "c1",
       category: "College",
       type: "image",
       url: "/RM403321.JPG",
+      description: "Main Campus Academic Building",
     },
     {
       id: "c2",
       category: "College",
       type: "image",
       url: "/auditorum.png",
+      description: "College Auditorium & Seminar Hall",
     },
     {
       id: "cl1",
       category: "Class",
       type: "image",
       url: "/class.JPG",
+      description: "Smart Lecture Halls & Classrooms",
     },
     {
       id: "cl2",
       category: "Class",
       type: "image",
       url: "/lab.JPG",
+      description: "Modern Science Laboratories",
     },
     {
       id: "s1",
       category: "Sports",
       type: "image",
       url: "/sports.png",
+      description: "Sports Arena & Physical Education",
     },
     {
       id: "s2",
       category: "Sports",
       type: "image",
       url: "/ground.jpg",
+      description: "Athletics & Outdoor Play Grounds",
     },
     {
       id: "a1",
       category: "Activity",
       type: "image",
       url: "/yoga.png",
+      description: "Yoga & Holistic Student Wellness",
     },
     {
       id: "1",
       category: "Activity",
       type: "image",
       url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80",
+      description: "Campus Activities & Student Events",
     },
     {
       id: "2",
       category: "Sports",
       type: "image",
       url: "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80",
+      description: "Athletic Tournaments & Sports Coaching",
     },
     {
       id: "3",
       category: "Events",
       type: "image",
       url: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80",
+      description: "Annual College Gatherings & Festivities",
     },
   ];
 
@@ -202,22 +214,21 @@ export default function Gallery() {
                       {item.category}
                     </span>
 
-                    {item.description && (
-                      <p className="text-white text-xs sm:text-sm font-medium leading-relaxed my-auto line-clamp-3 drop-shadow-sm">
-                        {item.description}
-                      </p>
-                    )}
-
-                    <div className="flex items-center justify-between text-white mt-auto pt-2">
-                      <span className="text-sm font-semibold tracking-wider uppercase">
-                        {item.type === "video" ? "Play Video" : "View Image"}
-                      </span>
+                    <div className="flex items-center justify-between text-white mt-auto pt-2 gap-3">
+                      <div className="space-y-0.5 pr-2">
+                        <span className="text-[10px] font-bold text-amber-300 uppercase tracking-widest block">
+                          Caption
+                        </span>
+                        <p className="text-xs sm:text-sm font-semibold tracking-wide leading-snug line-clamp-2">
+                          {item.description || (item.type === "video" ? "College Video Clip" : "College Campus Life")}
+                        </p>
+                      </div>
                       {item.type === "video" ? (
-                        <div className="p-3 bg-secondary text-primary rounded-full shadow-lg">
+                        <div className="p-3 bg-secondary text-primary rounded-full shadow-lg shrink-0">
                           <Play className="h-4.5 w-4.5 fill-current" />
                         </div>
                       ) : (
-                        <div className="p-3 bg-white/10 text-white rounded-full">
+                        <div className="p-3 bg-white/10 text-white rounded-full shrink-0">
                           <ImageIcon className="h-4.5 w-4.5" />
                         </div>
                       )}
