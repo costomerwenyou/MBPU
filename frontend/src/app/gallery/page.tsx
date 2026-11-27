@@ -20,14 +20,7 @@ export default function Gallery() {
 
   const categories = ["All", "College", "Class", "Hostel", "Activity", "Sports", "Events"];
 
-  const categoryOrder: Record<string, number> = {
-    College: 1,
-    Class: 2,
-    Hostel: 3,
-    Activity: 4,
-    Sports: 5,
-    Events: 6,
-  };
+  const categoryOrderList = ["College", "Class", "Hostel", "Activity", "Sports", "Events"];
 
   useEffect(() => {
     async function fetchGallery() {
@@ -46,16 +39,15 @@ export default function Gallery() {
     fetchGallery();
   }, [activeCategory]);
 
-  const displayedItems = [...items]
-    .filter((item) => activeCategory === "All" || item.category === activeCategory)
-    .sort((a, b) => {
-      const orderA = categoryOrder[a.category] ?? 99;
-      const orderB = categoryOrder[b.category] ?? 99;
-      if (orderA !== orderB) {
-        return orderA - orderB;
-      }
-      return 0;
-    });
+  // Group items by category in horizontal row order
+  const groupedCategories = categoryOrderList
+    .map((cat) => ({
+      name: cat,
+      items: items.filter((item) => item.category === cat),
+    }))
+    .filter((group) =>
+      activeCategory === "All" ? group.items.length > 0 : group.name === activeCategory
+    );
 
   return (
     <div className="min-h-screen bg-white pb-20">
@@ -105,12 +97,12 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Masonry Layout Grid */}
+        {/* Horizontal Category Sections & Grids */}
         {loading ? (
           <div className="text-center py-20">
             <span className="animate-pulse font-medium text-muted-foreground">Loading Gallery...</span>
           </div>
-        ) : displayedItems.length === 0 ? (
+        ) : groupedCategories.length === 0 ? (
           <div className="text-center py-20 border border-dashed border-border rounded-3xl bg-muted/10 p-8 my-8">
             <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center mx-auto mb-3 text-muted-foreground">
               <ImageIcon className="h-7 w-7" />
@@ -123,62 +115,75 @@ export default function Gallery() {
             </p>
           </div>
         ) : (
-          <motion.div
-            layout
-            className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {displayedItems.map((item) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative group rounded-3xl overflow-hidden shadow-md border border-border bg-muted/20 break-inside-avoid"
-                >
-                  <SafeImage
-                    src={item.url}
-                    fallbackSrc="/RM403321.JPG"
-                    alt={`${item.category} item`}
-                    className="object-cover w-full h-auto max-h-[500px]"
-                  />
-
-                  {/* Hover Info Overlay */}
-                  <div className="absolute inset-0 bg-primary/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 z-10">
-                    <span className="bg-secondary text-primary font-bold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider self-start">
-                      {item.category}
-                    </span>
-
-                    <div className="flex items-center justify-between text-white mt-auto pt-2 gap-3">
-                      <p className="text-xs sm:text-sm font-semibold tracking-wide leading-snug line-clamp-2">
-                        {item.description || (item.type === "video" ? "College Video Clip" : "College Campus Life")}
-                      </p>
-                      {item.type === "video" ? (
-                        <div className="p-3 bg-secondary text-primary rounded-full shadow-lg shrink-0">
-                          <Play className="h-4.5 w-4.5 fill-current" />
-                        </div>
-                      ) : (
-                        <div className="p-3 bg-white/10 text-white rounded-full shrink-0">
-                          <ImageIcon className="h-4.5 w-4.5" />
-                        </div>
-                      )}
+          <div className="space-y-12 sm:space-y-16">
+            {groupedCategories.map((group) => (
+              <section key={group.name} className="space-y-6">
+                {activeCategory === "All" && (
+                  <div className="flex items-center justify-between border-b border-border pb-3.5">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2.5 h-6 bg-secondary rounded-full" />
+                      <h3 className="text-xl sm:text-2xl font-black text-primary uppercase tracking-tight">
+                        {group.name}
+                      </h3>
                     </div>
+                    <span className="text-xs font-bold text-muted-foreground bg-muted px-3 py-1 rounded-full uppercase tracking-wider">
+                      {group.items.length} {group.items.length === 1 ? "Photo" : "Photos"}
+                    </span>
                   </div>
+                )}
 
-                  {/* Icon Indicator for small screen static display */}
-                  <div className="absolute top-4 right-4 z-20 p-2 bg-primary/85 backdrop-blur-sm rounded-full border border-white/10 text-white block group-hover:hidden transition-all shadow-md">
-                    {item.type === "video" ? (
-                      <Video className="h-4 w-4" />
-                    ) : (
-                      <ImageIcon className="h-4 w-4" />
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {group.items.map((item) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="relative group rounded-3xl overflow-hidden shadow-md border border-border bg-muted/20 aspect-[4/3]"
+                    >
+                      <SafeImage
+                        src={item.url}
+                        fallbackSrc="/RM403321.JPG"
+                        alt={`${item.category} item`}
+                        className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                      />
+
+                      {/* Hover Info Overlay */}
+                      <div className="absolute inset-0 bg-primary/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 z-10">
+                        <span className="bg-secondary text-primary font-bold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider self-start">
+                          {item.category}
+                        </span>
+
+                        <div className="flex items-center justify-between text-white mt-auto pt-2 gap-3">
+                          <p className="text-xs sm:text-sm font-semibold tracking-wide leading-snug line-clamp-2">
+                            {item.description || (item.type === "video" ? "College Video Clip" : "College Campus Life")}
+                          </p>
+                          {item.type === "video" ? (
+                            <div className="p-3 bg-secondary text-primary rounded-full shadow-lg shrink-0">
+                              <Play className="h-4.5 w-4.5 fill-current" />
+                            </div>
+                          ) : (
+                            <div className="p-3 bg-white/10 text-white rounded-full shrink-0">
+                              <ImageIcon className="h-4.5 w-4.5" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Icon Indicator for small screen static display */}
+                      <div className="absolute top-4 right-4 z-20 p-2 bg-primary/85 backdrop-blur-sm rounded-full border border-white/10 text-white block group-hover:hidden transition-all shadow-md">
+                        {item.type === "video" ? (
+                          <Video className="h-4 w-4" />
+                        ) : (
+                          <ImageIcon className="h-4 w-4" />
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
         )}
       </div>
     </div>
