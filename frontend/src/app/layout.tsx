@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TalentTestSideTab from "@/components/TalentTestSideTab";
 import { Providers } from "@/components/Providers";
 
 const geistSans = Geist({
@@ -21,11 +22,15 @@ export const metadata: Metadata = {
     "Maganur Basappa PU College (MBPU College), Davangere - a top-rated Pre University College in Karnataka offering Science and Computer Science with expert faculty.",
   icons: {
     icon: [
-      { url: "/MB%20PU%20Logo.png" },
-      { url: "/mb-pu-logo.png" },
+      { url: "/favicon.ico?v=3", sizes: "any" },
+      { url: "/icon-32.png?v=3", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png?v=3", sizes: "192x192", type: "image/png" },
+      { url: "/icon.png?v=3", sizes: "512x512", type: "image/png" },
     ],
-    shortcut: "/MB%20PU%20Logo.png",
-    apple: "/MB%20PU%20Logo.png",
+    shortcut: "/favicon.ico?v=3",
+    apple: [
+      { url: "/apple-icon.png?v=3", sizes: "180x180", type: "image/png" },
+    ],
   },
   keywords: [
     "Maganur Basappa PU College",
@@ -85,8 +90,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
-        <link rel="icon" href="/MB%20PU%20Logo.png" />
-        <link rel="apple-touch-icon" href="/MB%20PU%20Logo.png" />
+        <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png?v=3" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=3" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon.png?v=3" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=3" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -97,6 +105,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-grow pt-20">{children}</main>
           <Footer />
+          <TalentTestSideTab />
         </Providers>
       </body>
     </html>

@@ -29,11 +29,12 @@ model Result {
 }
 
 model GalleryItem {
-  id        String   @id @default(uuid())
-  url       String   // base64 or path to uploaded file
-  type      String   // "image" or "video"
-  category  String   // "Activity", "Sports", "Events"
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid())
+  url         String   // base64 or path to uploaded file
+  type        String   // "image" or "video"
+  category    String   // "Activity", "Sports", "Events"
+  description String?  // Optional caption or description
+  createdAt   DateTime @default(now())
 }
 
 model Setting {

@@ -148,7 +148,10 @@ export default function Hero() {
     fetchToppers();
   }, []);
 
-  const activeToppers = toppersList.length > 0 ? toppersList : defaultToppers;
+  const activeToppers = [
+    ...toppersList,
+    ...defaultToppers.filter((d) => !toppersList.some((t) => t.id === d.id || t.name === d.name)),
+  ];
   const total = activeToppers.length;
 
   useEffect(() => {

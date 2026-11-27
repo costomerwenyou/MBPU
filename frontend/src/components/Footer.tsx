@@ -101,6 +101,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/talent-test" className="text-secondary hover:text-white hover:underline transition-all font-semibold">
+                  MB Talent Test 2027
+                </Link>
+              </li>
+              <li>
                 <Link href="/gallery" className="hover:text-white hover:underline transition-all">
                   Photo & Video Gallery
                 </Link>

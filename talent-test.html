@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MB Talent Test 2027 | MB PU Science College, Davanagere</title>
+  <meta name="description" content="Announcing MB Talent Test 2027 for 10th students. Win ₹10,000 cash prizes and scholarships at MB PU Science College, Davanagere.">
+  <style>
+    /* --- CSS Custom Properties & Color Tokens --- */
+    :root {
+      --color-navy: #0b1f44;
+      --color-navy-hover: #142e61;
+      --color-gold: #ffc233;
+      --color-gold-hover: #eab020;
+      --color-bg: #f4f6fb;
+      --color-card: #ffffff;
+      --color-border: #e2e8f0;
+      --color-text-main: #0b1f44;
+      --color-text-muted: #556377;
+      --color-prize-bg: #0b1f44;
+      --color-prize-text: #ffffff;
+      --color-cd-box: rgba(255, 255, 255, 0.08);
+      --color-cd-border: rgba(255, 255, 255, 0.16);
+      --font-system: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #070d18;
+        --color-card: #0d1627;
+        --color-border: #1e2c45;
+        --color-text-main: #f8fafc;
+        --color-text-muted: #94a3b8;
+        --color-prize-bg: #071530;
+        --color-prize-border: rgba(255, 194, 51, 0.25);
+        --color-cd-box: rgba(255, 255, 255, 0.06);
+        --color-cd-border: rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    /* --- Base Resets & Layout --- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-system);
+      background-color: var(--color-bg);
+      color: var(--color-text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 96px; /* Prevents floating pill from covering footer */
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--color-gold);
+      outline-offset: 3px;
+    }
+
+    /* --- Header & College Logo (MB Shield Placeholder) --- */
+    .site-header {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 24px 20px 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .brand-shield {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      color: var(--color-navy);
+    }
+    @media (prefers-color-scheme: dark) {
+      .brand-shield { color: var(--color-gold); }
+    }
+    .brand-sub {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      font-weight: 600;
+      display: block;
+    }
+
+    /* --- Hero Container (Max 1040px, Fluid 24px-52px Padding, 24px Radius) --- */
+    .hero-wrapper {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .hero-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      padding: clamp(24px, 4.5vw, 52px);
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      align-items: center;
+      gap: clamp(24px, 4vw, 44px);
+      box-shadow: 0 4px 20px -2px rgba(11, 31, 68, 0.05);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Left Column: Content --- */
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .chip-gold {
+      background-color: var(--color-gold);
+      color: var(--color-navy);
+    }
+    .chip-gold-outline {
+      background-color: rgba(255, 194, 51, 0.15);
+      border: 1px solid var(--color-gold);
+      color: var(--color-gold);
+    }
+    .hero-headline {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      color: var(--color-text-main);
+    }
+    .hero-supporting {
+      font-size: clamp(1rem, 1.35vw, 1.15rem);
+      line-height: 1.5;
+      color: var(--color-text-muted);
+      max-width: 48ch;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 32px;
+      background-color: var(--color-gold);
+      color: var(--color-navy);
+      font-size: 1rem;
+      font-weight: 800;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .btn-primary:hover {
+      background-color: var(--color-gold-hover);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { transform: translateY(1px); }
+
+    /* Quick Facts (60 questions | 60 min OMR | 4 marks) */
+    .quick-facts {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--color-border);
+    }
+    .fact-item {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.84rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+    .fact-val {
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin-right: 6px;
+    }
+    .fact-bar {
+      color: var(--color-border);
+      margin-left: 12px;
+      user-select: none;
+    }
+
+    /* --- Right Column: Prize Card & Countdown --- */
+    .prize-card {
+      background-color: var(--color-prize-bg);
+      color: var(--color-prize-text);
+      border: 1px solid var(--color-prize-border);
+      border-radius: 20px;
+      padding: clamp(24px, 3.2vw, 36px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 12px 32px -8px rgba(11, 31, 68, 0.25);
+    }
+    .prize-big {
+      font-size: clamp(2.6rem, 5.2vw, 3.8rem);
+      font-weight: 800;
+      color: var(--color-gold);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin: 8px 0 4px;
+    }
+    .prize-caption {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      text-transform: capitalize;
+    }
+    .cd-divider {
+      width: 100%;
+      height: 1px;
+      background-color: var(--color-prize-border);
+      margin: 22px 0 16px;
+    }
+    .cd-title {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.65);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .cd-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+    .cd-box {
+      background-color: var(--color-cd-box);
+      border: 1px solid var(--color-cd-border);
+      border-radius: 12px;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cd-num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .cd-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 3px;
+      font-weight: 600;
+    }
+
+    /* --- Floating Register Button --- */
+    .floating-wrap {
+      position: fixed;
+      right: 18px;
+      bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(28px);
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .floating-wrap.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .floating-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+      padding: 6px 18px 6px 8px;
+      background-color: var(--color-navy);
+      color: #ffffff;
+      border-radius: 9999px;
+      box-shadow: 0 10px 25px -4px rgba(11, 31, 68, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .floating-pill:hover {
+      background-color: var(--color-navy-hover);
+      transform: translateY(-2px);
+    }
+    .pill-chip {
+      background-color: var(--color-gold);
+      color: var(--color-navy);
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+
+    /* --- Mobile Responsive (760px and below) --- */
+    @media (max-width: 760px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+      .quick-facts {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .fact-bar { display: none; }
+      .floating-wrap {
+        left: 16px;
+        right: 16px;
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        display: flex;
+        justify-content: center;
+      }
+      .floating-pill {
+        width: 100%;
+        max-width: 420px;
+        justify-content: center;
+      }
+    }
+
+    /* --- Reduced Motion --- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .floating-wrap {
+        transform: none !important;
+        transition: opacity 0.2s ease !important;
+      }
+    }
+
+    /* --- Demo Content (Enables page scroll testing) --- */
+    .demo-section {
+      width: 100%;
+      max-width: 1040px;
+      margin: 48px auto 0;
+      padding: 0 16px;
+    }
+    .demo-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      padding: clamp(24px, 3.5vw, 40px);
+      margin-bottom: 24px;
+    }
+    .demo-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .demo-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SITE HEADER WITH MB SHIELD LOGO (Vector Placeholder) -->
+  <header class="site-header" role="banner">
+    <a href="#hero" class="brand" aria-label="Maganur Basappa PU Science College">
+      <svg class="brand-shield" viewBox="0 0 44 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M22 2L4 9V22C4 33.5 11.7 44.1 22 47C32.3 44.1 40 33.5 40 22V9L22 2Z" fill="currentColor"/>
+        <path d="M22 6L8 12.2V22C8 31.2 13.9 39.8 22 42.4C30.1 39.8 36 31.2 36 22V12.2L22 6Z" fill="#ffc233"/>
+        <path d="M14 28V19L18.5 24L22 19L25.5 24L30 19V28H27V23L23.8 27H20.2L17 23V28H14Z" fill="#0b1f44"/>
+      </svg>
+      <div>
+        <span>MB PU Science College</span>
+        <span class="brand-sub">Davanagere • Karnataka</span>
+      </div>
+    </a>
+  </header>
+
+  <!-- MAIN HERO SECTION -->
+  <main>
+    <div class="hero-wrapper">
+      <section id="hero" class="hero-card" aria-labelledby="hero-title">
+        
+        <!-- LEFT: CONTENT, HEADLINE, CTA & QUICK FACTS -->
+        <div class="hero-content">
+          <span class="chip chip-gold">For 10th students</span>
+          <h1 id="hero-title" class="hero-headline">
+            Show what you know.<br>Win ₹10,000.
+          </h1>
+          <p class="hero-supporting">
+            Take the MB Talent Test and compete for cash prizes and scholarships at MB PU Science College.
+          </p>
+          <a href="tel:+919180602860" class="btn-primary" id="primary-btn" aria-label="Register now for MB Talent Test">
+            Register now
+          </a>
+
+          <!-- Three Quick Facts -->
+          <div class="quick-facts" aria-label="Talent Test format quick facts">
+            <div class="fact-item">
+              <span class="fact-val">60</span> questions
+              <span class="fact-bar">|</span>
+            </div>
+            <div class="fact-item">
+              <span class="fact-val">60 min</span> OMR based
+              <span class="fact-bar">|</span>
+            </div>
+            <div class="fact-item">
+              <span class="fact-val">4 marks</span> per correct answer
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: PRIZE CARD WITH LIVE COUNTDOWN -->
+        <div class="prize-card" aria-labelledby="prize-num">
+          <span class="chip chip-gold-outline">Top 10 students</span>
+          <div id="prize-num" class="prize-big">₹10,000</div>
+          <div class="prize-caption">cash prize and scholarships</div>
+
+          <div class="cd-divider" role="separator"></div>
+
+          <div class="cd-title" id="cd-status">Countdown to Test</div>
+          <div class="cd-grid" id="cd-timer" aria-label="Countdown to MB Talent Test" aria-live="polite">
+            <div class="cd-box">
+              <span class="cd-num" id="cd-days">00</span>
+              <span class="cd-lbl">Days</span>
+            </div>
+            <div class="cd-box">
+              <span class="cd-num" id="cd-hrs">00</span>
+              <span class="cd-lbl">Hrs</span>
+            </div>
+            <div class="cd-box">
+              <span class="cd-num" id="cd-min">00</span>
+              <span class="cd-lbl">Min</span>
+            </div>
+            <div class="cd-box">
+              <span class="cd-num" id="cd-sec">00</span>
+              <span class="cd-lbl">Sec</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- DEMO SCROLL CONTENT (Scroll down to see floating button appear) -->
+    <div class="demo-section">
+      <div class="demo-card">
+        <h3>About Maganur Basappa Pre-University Science College</h3>
+        <p>Located in Taralabalu Extension, Vidyanagar, Davanagere, MB PU Science College provides focused integrated coaching for PCMB and PCMCs combinations with proven academic excellence in NEET, JEE, and KCET.</p>
+      </div>
+      <div class="demo-card">
+        <h3>Test Structure & Guidelines</h3>
+        <p>The talent test evaluates Class 10 Science, Mathematics, and Analytical aptitude. Candidates are awarded scholarships and awards based on state-level ranking.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING REGISTER BUTTON (Appears upon scrolling past hero banner) -->
+  <div class="floating-wrap" id="floatingPillWrap">
+    <a href="tel:+919180602860" class="floating-pill" id="floatingPill" aria-label="Register for MB Talent Test 2027">
+      <span class="pill-chip">13 Dec</span>
+      <span>Talent Test 2027</span>
+    </a>
+  </div>
+
+  <!-- JAVASCRIPT & CONFIGURATION -->
+  <script>
+    /**
+     * CONFIG OBJECT
+     * Update dates, copy, and registration links here.
+     */
+    const CONFIG = {
+      // Test target: Sunday, 13 December 2026, 10:00 AM IST (UTC+05:30)
+      targetDateISO: "2026-12-13T10:00:00+05:30",
+      registrationUrl: "tel:+919180602860",
+      activeCountdownHeading: "Countdown to Test",
+      expiredCountdownHeading: "Test day is here",
+      floatingAriaLabel: "Register for MB Talent Test 2027"
+    };
+
+    (function initHeroAndPill() {
+      const targetTime = new Date(CONFIG.targetDateISO).getTime();
+      const hero = document.getElementById("hero");
+      const floatingWrap = document.getElementById("floatingPillWrap");
+      const floatingPill = document.getElementById("floatingPill");
+      const primaryBtn = document.getElementById("primary-btn");
+
+      const elDays = document.getElementById("cd-days");
+      const elHrs = document.getElementById("cd-hrs");
+      const elMin = document.getElementById("cd-min");
+      const elSec = document.getElementById("cd-sec");
+      const elStatus = document.getElementById("cd-status");
+      const elTimer = document.getElementById("cd-timer");
+
+      // Bind URLs from config
+      if (primaryBtn) primaryBtn.href = CONFIG.registrationUrl;
+      if (floatingPill) {
+        floatingPill.href = CONFIG.registrationUrl;
+        floatingPill.setAttribute("aria-label", CONFIG.floatingAriaLabel);
+      }
+
+      let isExpired = false;
+
+      // 1. Live Countdown Engine
+      function tick() {
+        const remaining = targetTime - Date.now();
+
+        if (remaining <= 0) {
+          isExpired = true;
+          elDays.textContent = "00";
+          elHrs.textContent = "00";
+          elMin.textContent = "00";
+          elSec.textContent = "00";
+
+          if (elStatus) elStatus.textContent = CONFIG.expiredCountdownHeading;
+          if (floatingWrap) {
+            floatingWrap.classList.remove("is-visible");
+            floatingWrap.style.display = "none";
+          }
+          return;
+        }
+
+        const days = Math.floor(remaining / 86400000);
+        const hours = Math.floor((remaining % 86400000) / 3600000);
+        const minutes = Math.floor((remaining % 3600000) / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+
+        elDays.textContent = String(days).padStart(2, "0");
+        elHrs.textContent = String(hours).padStart(2, "0");
+        elMin.textContent = String(minutes).padStart(2, "0");
+        elSec.textContent = String(seconds).padStart(2, "0");
+
+        if (elTimer) {
+          elTimer.setAttribute("aria-label", `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds remaining`);
+        }
+      }
+
+      tick();
+      const timer = setInterval(() => {
+        tick();
+        if (isExpired) clearInterval(timer);
+      }, 1000);
+
+      // 2. IntersectionObserver for Floating Button Entrance
+      if ("IntersectionObserver" in window && hero && floatingWrap) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (isExpired) return;
+            if (entry.isIntersecting) {
+              floatingWrap.classList.remove("is-visible");
+            } else {
+              floatingWrap.classList.add("is-visible");
+            }
+          });
+        }, { threshold: 0.1 });
+        observer.observe(hero);
+      } else if (floatingWrap) {
+        window.addEventListener("scroll", () => {
+          if (isExpired) return;
+          const rect = hero.getBoundingClientRect();
+          if (rect.bottom <= 0) {
+            floatingWrap.classList.add("is-visible");
+          } else {
+            floatingWrap.classList.remove("is-visible");
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

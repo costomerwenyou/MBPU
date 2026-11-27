@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Image as ImageIcon } from "lucide-react";
 
-interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface SafeImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
+  src?: string;
   containerClassName?: string;
   fallbackSrc?: string;
 }
@@ -16,51 +17,44 @@ export default function SafeImage({
   fallbackSrc,
   ...props
 }: SafeImageProps) {
-  const [loaded, setLoaded] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(src);
+  const [currentSrc, setCurrentSrc] = useState<string | undefined>(src);
   const [hasError, setHasError] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     setCurrentSrc(src);
-    setLoaded(false);
     setHasError(false);
   }, [src]);
-
-  useEffect(() => {
-    if (imgRef.current && imgRef.current.complete) {
-      if (imgRef.current.naturalWidth !== 0) {
-        setLoaded(true);
-      }
-    }
-  }, [currentSrc]);
 
   const handleError = () => {
     if (fallbackSrc && currentSrc !== fallbackSrc) {
       setCurrentSrc(fallbackSrc);
     } else {
       setHasError(true);
-      setLoaded(true);
     }
   };
 
-  return (
-    <div className={`relative overflow-hidden bg-muted/40 ${containerClassName}`}>
-      {!loaded && !hasError && (
-        <div className="absolute inset-0 bg-gradient-to-r from-muted/40 via-muted/80 to-muted/40 animate-pulse flex items-center justify-center z-0">
-          <ImageIcon className="h-7 w-7 text-muted-foreground/30 animate-pulse" />
-        </div>
-      )}
+  if (hasError || !currentSrc) {
+    return (
+      <div
+        className={`flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400 p-4 border border-dashed border-slate-200 ${containerClassName || className}`}
+      >
+        <ImageIcon className="h-8 w-8 text-slate-300 mb-1" />
+        <span className="text-xs text-center font-medium line-clamp-1">
+          {alt || "Image unavailable"}
+        </span>
+      </div>
+    );
+  }
 
+  return (
+    <div className={`relative overflow-hidden ${containerClassName}`}>
       <img
-        ref={imgRef}
         src={currentSrc}
         alt={alt}
-        onLoad={() => setLoaded(true)}
         onError={handleError}
-        className={`transition-all duration-500 ease-out ${
-          loaded ? "opacity-100 scale-100 z-10 relative" : "opacity-0 scale-95"
-        } ${className}`}
+        className={className}
+        loading="lazy"
+        decoding="async"
         {...props}
       />
     </div>

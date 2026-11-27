@@ -101,7 +101,10 @@ export default function Results() {
     },
   ];
 
-  const displayedToppers = toppers.length > 0 ? toppers : defaultToppers;
+  const displayedToppers = [
+    ...toppers,
+    ...defaultToppers.filter((d) => !toppers.some((t) => t.id === d.id || t.name === d.name)),
+  ];
 
   const categories = [
     { id: "ALL", label: "All Results" },

@@ -10,6 +10,7 @@ interface GalleryItem {
   url: string;
   type: string; // "image" or "video"
   category: string; // "Activity", "Sports", "Events"
+  description?: string;
 }
 
 export default function Gallery() {
@@ -111,7 +112,12 @@ export default function Gallery() {
     },
   ];
 
-  const displayedItems = items.length > 0 ? items : defaultItems.filter(item => activeCategory === "All" || item.category === activeCategory);
+  const displayedItems = [
+    ...items,
+    ...defaultItems.filter(
+      (d) => !items.some((it) => it.url === d.url)
+    ),
+  ].filter((item) => activeCategory === "All" || item.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-white pb-20">
@@ -185,17 +191,24 @@ export default function Gallery() {
                 >
                   <SafeImage
                     src={item.url}
+                    fallbackSrc="/RM403321.JPG"
                     alt={`${item.category} item`}
                     className="object-cover w-full h-auto max-h-[500px]"
                   />
 
                   {/* Hover Info Overlay */}
-                  <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 z-10">
+                  <div className="absolute inset-0 bg-primary/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 z-10">
                     <span className="bg-secondary text-primary font-bold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider self-start">
                       {item.category}
                     </span>
 
-                    <div className="flex items-center justify-between text-white mt-auto">
+                    {item.description && (
+                      <p className="text-white text-xs sm:text-sm font-medium leading-relaxed my-auto line-clamp-3 drop-shadow-sm">
+                        {item.description}
+                      </p>
+                    )}
+
+                    <div className="flex items-center justify-between text-white mt-auto pt-2">
                       <span className="text-sm font-semibold tracking-wider uppercase">
                         {item.type === "video" ? "Play Video" : "View Image"}
                       </span>

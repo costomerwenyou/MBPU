@@ -34,6 +34,7 @@ interface GalleryItem {
   url: string;
   type: string;
   category: string;
+  description?: string;
 }
 
 interface InquiryItem {
@@ -79,6 +80,7 @@ export default function AdminDashboardClient({
   const [topperFile, setTopperFile] = useState<File | null>(null);
   const [galleryCategory, setGalleryCategory] = useState("Activity");
   const [galleryType, setGalleryType] = useState("image");
+  const [galleryDescription, setGalleryDescription] = useState("");
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
 
   // Status/Loading indicators
@@ -258,6 +260,7 @@ export default function AdminDashboardClient({
         url,
         type: galleryType,
         category: galleryCategory,
+        description: galleryDescription.trim() || undefined,
       }));
 
       const res = await fetch("/api/admin/gallery", {
@@ -271,6 +274,7 @@ export default function AdminDashboardClient({
         const newItems: GalleryItem[] = data.galleryItems || (data.galleryItem ? [data.galleryItem] : []);
         setGallery([...newItems, ...gallery]);
         setGalleryFiles([]);
+        setGalleryDescription("");
         showNotification(
           `Successfully uploaded ${newItems.length} gallery item${newItems.length > 1 ? "s" : ""}.`
         );
@@ -712,6 +716,19 @@ export default function AdminDashboardClient({
 
                 <div>
                   <label className="block text-xs font-bold text-primary uppercase tracking-wider mb-1.5">
+                    Description / Caption <span className="text-muted-foreground font-normal lowercase">(optional)</span>
+                  </label>
+                  <textarea
+                    value={galleryDescription}
+                    onChange={(e) => setGalleryDescription(e.target.value)}
+                    placeholder="Enter a description or caption for these gallery item(s) (e.g. Annual Science Exhibition 2026, Sports Day Winners, Hostel Study Room)..."
+                    rows={2}
+                    className="w-full px-4 py-3 rounded-xl border border-border text-sm focus:outline-none focus:border-secondary transition-colors bg-white font-medium resize-y min-h-[72px]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-primary uppercase tracking-wider mb-1.5">
                     Select Media File(s) (Multiple selection allowed)
                   </label>
                   <div className="space-y-3">
@@ -790,18 +807,29 @@ export default function AdminDashboardClient({
                   {gallery.map((item) => (
                     <div
                       key={item.id}
-                      className="relative rounded-2xl overflow-hidden border border-border aspect-square group shadow-sm bg-muted/10"
+                      className="relative rounded-2xl overflow-hidden border border-border aspect-square group shadow-sm bg-muted/10 flex flex-col justify-end"
                     >
                       <img
                         src={item.url}
                         alt="Gallery item preview"
-                        className="object-cover w-full h-full"
+                        className="object-cover w-full h-full absolute inset-0"
                       />
-                      <div className="absolute top-2 left-2 z-20 bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      <div className="absolute top-2 left-2 z-20 bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
                         {item.category}
                       </div>
 
-                      <div className="absolute inset-0 bg-primary/75 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 z-10">
+                      {item.description && (
+                        <div className="absolute bottom-0 inset-x-0 z-20 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-2.5 pt-6 text-white text-[11px] font-medium leading-snug line-clamp-2">
+                          {item.description}
+                        </div>
+                      )}
+
+                      <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center space-y-2 z-30">
+                        {item.description && (
+                          <p className="text-white text-xs font-medium line-clamp-3 px-1">
+                            {item.description}
+                          </p>
+                        )}
                         <button
                           onClick={() => handleDeleteGallery(item.id)}
                           className="bg-red-500 hover:bg-red-600 text-white p-2.5 rounded-full shadow-lg transition-transform hover:scale-110"

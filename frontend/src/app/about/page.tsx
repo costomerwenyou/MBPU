@@ -241,8 +241,10 @@ export default function About() {
                       {/* Cutout Image Layered Over Shape */}
                       <SafeImage
                         src={leader.photo}
+                        fallbackSrc="/RM403321.JPG"
                         alt={`${leader.name} - ${leader.role}, Maganur Basappa P.U. Science College`}
-                        className="relative z-10 w-56 h-56 sm:w-64 sm:h-64 object-cover rounded-2xl shadow-2xl border-4 border-white"
+                        containerClassName="relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-2xl shadow-2xl border-4 border-white"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>

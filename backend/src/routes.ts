@@ -336,24 +336,39 @@ router.post("/admin/gallery", async (req: Request, res: Response) => {
     const body = req.body;
     if (Array.isArray(body.items)) {
       const validItems = body.items.filter(
-        (item: { url?: string; type?: string; category?: string }) => item.url && item.type && item.category
+        (item: { url?: string; type?: string; category?: string; description?: string }) => item.url && item.type && item.category
       );
       if (validItems.length === 0) {
         res.status(400).json({ error: "No valid items provided" });
         return;
       }
-      await db.galleryItem.createMany({ data: validItems });
+      try {
+        await (db.galleryItem.createMany as any)({ data: validItems });
+      } catch (dbErr) {
+        // Fallback without description if database column doesn't exist yet
+        const fallbackItems = validItems.map((it: { url: string; type: string; category: string }) => ({
+          url: it.url,
+          type: it.type,
+          category: it.category,
+        }));
+        await db.galleryItem.createMany({ data: fallbackItems });
+      }
       const createdItems = await db.galleryItem.findMany({ orderBy: { createdAt: "desc" }, take: validItems.length });
       clearCache("gallery");
       res.json({ success: true, galleryItems: createdItems });
       return;
     }
-    const { url, type, category } = body;
+    const { url, type, category, description } = body;
     if (!url || !type || !category) {
       res.status(400).json({ error: "URL, type, and category are required" });
       return;
     }
-    const galleryItem = await db.galleryItem.create({ data: { url, type, category } });
+    let galleryItem;
+    try {
+      galleryItem = await (db.galleryItem.create as any)({ data: { url, type, category, description: description || null } });
+    } catch (dbErr) {
+      galleryItem = await db.galleryItem.create({ data: { url, type, category } });
+    }
     clearCache("gallery");
     res.json({ success: true, galleryItem });
   } catch (error) {
