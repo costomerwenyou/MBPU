@@ -142,7 +142,8 @@ export default function Gallery() {
                     src={item.url}
                     fallbackSrc="/RM403321.JPG"
                     alt={`${item.category} item`}
-                    className="object-cover w-full h-full"
+                    containerClassName="w-full h-full absolute inset-0"
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                   />
 
                   {/* Hover Info Overlay */}
