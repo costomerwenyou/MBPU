@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { signOut } from "next-auth/react";
+import { compressImage } from "@/lib/imageCompression";
 import {
   Settings,
   Megaphone,
@@ -168,19 +169,23 @@ export default function AdminDashboardClient({
     }
   };
 
-  // Upload file helper
+  // Upload file helper (with automatic client-side compression to avoid 413 Payload Too Large)
   const uploadFile = async (file: File): Promise<string> => {
+    const processed = await compressImage(file, 1200, 1200, 0.85);
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", processed);
 
     const res = await fetch("/api/upload", {
       method: "POST",
       body: formData,
     });
 
-    if (!res.ok) throw new Error("Upload failed");
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.error || "Upload failed");
+    }
     const data = await res.json();
-    return data.url;
+    return data.url || (data.urls && data.urls[0]);
   };
 
   // Add Topper Result
@@ -234,7 +239,7 @@ export default function AdminDashboardClient({
     }
   };
 
-  // Add Gallery item(s)
+  // Add Gallery item(s) (optimizes and uploads individually to avoid 413 Payload Too Large)
   const handleAddGallery = async (e: React.FormEvent) => {
     e.preventDefault();
     if (galleryFiles.length === 0) {
@@ -244,17 +249,34 @@ export default function AdminDashboardClient({
 
     setLoading(true);
     try {
-      const formData = new FormData();
-      galleryFiles.forEach((file) => formData.append("files", file));
+      showNotification(`Optimizing ${galleryFiles.length} file(s) for upload...`);
+      const uploadedUrls: string[] = [];
 
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+      for (let i = 0; i < galleryFiles.length; i++) {
+        const file = galleryFiles[i];
+        const processedFile = await compressImage(file, 1920, 1920, 0.82);
 
-      if (!uploadRes.ok) throw new Error("Upload failed");
-      const uploadData = await uploadRes.json();
-      const uploadedUrls: string[] = uploadData.urls || [uploadData.url];
+        const formData = new FormData();
+        formData.append("file", processedFile);
+
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          const errData = await uploadRes.json().catch(() => null);
+          throw new Error(errData?.error || `Upload failed for ${file.name}`);
+        }
+
+        const uploadData = await uploadRes.json();
+        const url = uploadData.url || (uploadData.urls && uploadData.urls[0]);
+        if (url) uploadedUrls.push(url);
+      }
+
+      if (uploadedUrls.length === 0) {
+        throw new Error("No files were successfully uploaded.");
+      }
 
       const itemsToCreate = uploadedUrls.map((url) => ({
         url,
@@ -281,8 +303,8 @@ export default function AdminDashboardClient({
       } else {
         showNotification("Failed to upload gallery item(s).", true);
       }
-    } catch (err) {
-      showNotification("Error uploading gallery item(s).", true);
+    } catch (err: any) {
+      showNotification(err?.message || "Error uploading gallery item(s).", true);
     } finally {
       setLoading(false);
     }

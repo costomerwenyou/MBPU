@@ -57,7 +57,8 @@ app.use((_req, res, next) => {
   next();
 });
 
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // API Routes
 app.use("/api", routes);

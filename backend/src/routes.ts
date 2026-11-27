@@ -93,7 +93,7 @@ const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".pdf"];
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB file size limit
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB file size limit
   fileFilter: (_req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowedMimeTypes.includes(file.mimetype) && allowedExtensions.includes(ext)) {
