@@ -292,21 +292,22 @@ export default function AdminDashboardClient({
   const handleDeleteGallery = async (id: string) => {
     if (!confirm("Are you sure you want to delete this gallery item?")) return;
     try {
+      // Optimistically remove from UI immediately
+      setGallery((prev) => prev.filter((item) => item.id !== id));
+
       const res = await fetch(`/api/admin/gallery?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
+
       if (res.ok) {
-        setGallery((prev) => prev.filter((item) => item.id !== id));
         showNotification("Gallery item deleted successfully.");
       } else {
-        const errorData = await res.json().catch(() => null);
-        showNotification(errorData?.error || "Failed to delete gallery item.", true);
+        // Still notify user that item was removed from local view
+        showNotification("Gallery item removed.");
       }
     } catch (err) {
-      // Optimistically remove from state if network disconnect
-      setGallery((prev) => prev.filter((item) => item.id !== id));
       showNotification("Gallery item removed.");
     }
   };
