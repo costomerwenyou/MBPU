@@ -18,7 +18,16 @@ export default function Gallery() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "Hostel", "College", "Class", "Activity", "Sports", "Events"];
+  const categories = ["All", "College", "Class", "Hostel", "Activity", "Sports", "Events"];
+
+  const categoryOrder: Record<string, number> = {
+    College: 1,
+    Class: 2,
+    Hostel: 3,
+    Activity: 4,
+    Sports: 5,
+    Events: 6,
+  };
 
   useEffect(() => {
     async function fetchGallery() {
@@ -37,99 +46,16 @@ export default function Gallery() {
     fetchGallery();
   }, [activeCategory]);
 
-  const defaultItems: GalleryItem[] = [
-    {
-      id: "h1",
-      category: "Hostel",
-      type: "image",
-      url: "/hostel1.JPG",
-      description: "Hostel Facility & Student Rooms",
-    },
-    {
-      id: "h2",
-      category: "Hostel",
-      type: "image",
-      url: "/hostel2.JPG",
-      description: "Clean & Spacious Hostel Amenities",
-    },
-    {
-      id: "c1",
-      category: "College",
-      type: "image",
-      url: "/RM403321.JPG",
-      description: "Main Campus Academic Building",
-    },
-    {
-      id: "c2",
-      category: "College",
-      type: "image",
-      url: "/auditorum.png",
-      description: "College Auditorium & Seminar Hall",
-    },
-    {
-      id: "cl1",
-      category: "Class",
-      type: "image",
-      url: "/class.JPG",
-      description: "Smart Lecture Halls & Classrooms",
-    },
-    {
-      id: "cl2",
-      category: "Class",
-      type: "image",
-      url: "/lab.JPG",
-      description: "Modern Science Laboratories",
-    },
-    {
-      id: "s1",
-      category: "Sports",
-      type: "image",
-      url: "/sports.png",
-      description: "Sports Arena & Physical Education",
-    },
-    {
-      id: "s2",
-      category: "Sports",
-      type: "image",
-      url: "/ground.jpg",
-      description: "Athletics & Outdoor Play Grounds",
-    },
-    {
-      id: "a1",
-      category: "Activity",
-      type: "image",
-      url: "/yoga.png",
-      description: "Yoga & Holistic Student Wellness",
-    },
-    {
-      id: "1",
-      category: "Activity",
-      type: "image",
-      url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80",
-      description: "Campus Activities & Student Events",
-    },
-    {
-      id: "2",
-      category: "Sports",
-      type: "image",
-      url: "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80",
-      description: "Athletic Tournaments & Sports Coaching",
-    },
-    {
-      id: "3",
-      category: "Events",
-      type: "image",
-      url: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80",
-      description: "Annual College Gatherings & Festivities",
-    },
-  ];
-
-  const displayedItems = [
-    ...items,
-    ...defaultItems.filter(
-      (d) => !items.some((it) => it.url === d.url)
-    ),
-  ].filter((item) => activeCategory === "All" || item.category === activeCategory);
+  const displayedItems = [...items]
+    .filter((item) => activeCategory === "All" || item.category === activeCategory)
+    .sort((a, b) => {
+      const orderA = categoryOrder[a.category] ?? 99;
+      const orderB = categoryOrder[b.category] ?? 99;
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+      return 0;
+    });
 
   return (
     <div className="min-h-screen bg-white pb-20">
@@ -168,11 +94,10 @@ export default function Gallery() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full transition-all cursor-pointer ${
-                  activeCategory === cat
+                className={`text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full transition-all cursor-pointer ${activeCategory === cat
                     ? "bg-secondary text-primary shadow-md"
                     : "bg-muted text-muted-foreground hover:bg-muted-foreground/10 hover:text-primary"
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -184,6 +109,18 @@ export default function Gallery() {
         {loading ? (
           <div className="text-center py-20">
             <span className="animate-pulse font-medium text-muted-foreground">Loading Gallery...</span>
+          </div>
+        ) : displayedItems.length === 0 ? (
+          <div className="text-center py-20 border border-dashed border-border rounded-3xl bg-muted/10 p-8 my-8">
+            <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center mx-auto mb-3 text-muted-foreground">
+              <ImageIcon className="h-7 w-7" />
+            </div>
+            <h3 className="text-base font-bold text-primary">No Images Found</h3>
+            <p className="text-sm text-muted-foreground mt-1 max-w-sm mx-auto">
+              {activeCategory === "All"
+                ? "No gallery images have been uploaded yet."
+                : `No images uploaded under "${activeCategory}" yet.`}
+            </p>
           </div>
         ) : (
           <motion.div
@@ -215,14 +152,9 @@ export default function Gallery() {
                     </span>
 
                     <div className="flex items-center justify-between text-white mt-auto pt-2 gap-3">
-                      <div className="space-y-0.5 pr-2">
-                        <span className="text-[10px] font-bold text-amber-300 uppercase tracking-widest block">
-                          Caption
-                        </span>
-                        <p className="text-xs sm:text-sm font-semibold tracking-wide leading-snug line-clamp-2">
-                          {item.description || (item.type === "video" ? "College Video Clip" : "College Campus Life")}
-                        </p>
-                      </div>
+                      <p className="text-xs sm:text-sm font-semibold tracking-wide leading-snug line-clamp-2">
+                        {item.description || (item.type === "video" ? "College Video Clip" : "College Campus Life")}
+                      </p>
                       {item.type === "video" ? (
                         <div className="p-3 bg-secondary text-primary rounded-full shadow-lg shrink-0">
                           <Play className="h-4.5 w-4.5 fill-current" />

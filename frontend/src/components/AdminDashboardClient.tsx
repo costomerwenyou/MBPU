@@ -831,10 +831,25 @@ export default function AdminDashboardClient({
                 Active Gallery Media
               </h3>
               {gallery.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No media files uploaded yet. Falling back to defaults.</p>
+                <p className="text-sm text-muted-foreground">No media files uploaded yet.</p>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {gallery.map((item) => (
+                  {[...gallery]
+                    .sort((a, b) => {
+                      const categoryRank: Record<string, number> = {
+                        College: 1,
+                        Class: 2,
+                        Hostel: 3,
+                        Activity: 4,
+                        Sports: 5,
+                        Events: 6,
+                      };
+                      const rankA = categoryRank[a.category] ?? 99;
+                      const rankB = categoryRank[b.category] ?? 99;
+                      if (rankA !== rankB) return rankA - rankB;
+                      return 0;
+                    })
+                    .map((item) => (
                     <div
                       key={item.id}
                       className="relative rounded-2xl overflow-hidden border border-border aspect-square group shadow-sm bg-muted/10 flex flex-col justify-end"
