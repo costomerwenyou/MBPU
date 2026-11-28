@@ -83,7 +83,7 @@ export default function TalentTestPage() {
         dot: "bg-emerald-500",
       },
       topics: [
-        "Structure of Atom (9th)",
+        "Carbon and its compounds",
         "Chemical Reactions & Equation",
         "Metals & Non-Metals",
         "Acid, Bases & Salts",
