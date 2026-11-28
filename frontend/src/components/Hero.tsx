@@ -14,6 +14,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import SafeImage from "@/components/SafeImage";
+import TalentButton from "@/components/TalentButton";
 
 interface TopperItem {
   id: string;
@@ -374,15 +375,26 @@ export default function Hero() {
           </div>
 
           {/* Right Side: Star Topper Spotlight - 3D Perspective Team Carousel */}
-          <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              className="relative w-full max-w-lg rounded-3xl p-4 sm:p-6 bg-transparent border-0 shadow-none overflow-hidden group transition-all duration-500 flex flex-col items-center justify-center text-center"
-            >
+          <div className="lg:col-span-6 relative flex flex-col items-center lg:items-end justify-center">
+            <div className="w-full max-w-lg flex flex-col items-center">
+              {/* Talent Test Button in Marked Area */}
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+                className="z-20 flex justify-center w-full"
+              >
+                <TalentButton size="lg" text="MB TALENT TEST 2027" />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                className="relative w-full rounded-3xl p-4 sm:p-6 bg-transparent border-0 shadow-none overflow-hidden group transition-all duration-500 flex flex-col items-center justify-center text-center"
+              >
 
               {/* 3D Track */}
               <div className="w-full relative h-[360px] sm:h-[390px] flex items-center justify-center perspective-[1000px]">
@@ -483,6 +495,7 @@ export default function Hero() {
               </div>
             </motion.div>
           </div>
+        </div>
 
         </div>
       </div>

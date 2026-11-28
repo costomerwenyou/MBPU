@@ -13,6 +13,12 @@ import {
   FileCheck2,
   FileText,
   AlertCircle,
+  Atom,
+  FlaskConical,
+  Calculator,
+  Dna,
+  BookOpen,
+  CheckCircle2,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -49,6 +55,92 @@ export default function TalentTestPage() {
     },
   ];
 
+  const syllabusData = [
+    {
+      subject: "Physics",
+      icon: Atom,
+      theme: {
+        badge: "bg-blue-100 text-blue-800 border-blue-200",
+        iconBg: "bg-blue-50 text-blue-600 border-blue-200",
+        cardBorder: "hover:border-blue-300",
+        dot: "bg-blue-500",
+      },
+      topics: [
+        "Light - Reflection and Refraction",
+        "Electricity",
+        "Human Eye and the Colourful World",
+        "Force and Laws of Motion",
+        "Work & Energy",
+      ],
+    },
+    {
+      subject: "Chemistry",
+      icon: FlaskConical,
+      theme: {
+        badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
+        iconBg: "bg-emerald-50 text-emerald-600 border-emerald-200",
+        cardBorder: "hover:border-emerald-300",
+        dot: "bg-emerald-500",
+      },
+      topics: [
+        "Structure of Atom (9th)",
+        "Chemical Reactions & Equation",
+        "Metals & Non-Metals",
+        "Acid, Bases & Salts",
+      ],
+    },
+    {
+      subject: "Mathematics",
+      icon: Calculator,
+      theme: {
+        badge: "bg-amber-100 text-amber-900 border-amber-200",
+        iconBg: "bg-amber-50 text-amber-600 border-amber-200",
+        cardBorder: "hover:border-amber-300",
+        dot: "bg-amber-500",
+      },
+      topics: [
+        "Real Numbers",
+        "Polynomials (9th & 10th)",
+        "Linear Equation in Two Variables",
+        "Coordinate Geometry",
+        "Quadratic Equations",
+        "Triangles: Congruence and Similarity",
+        "Trigonometry & Its Applications",
+        "Arithmetic Progression",
+        "Mensuration",
+        "Circles",
+      ],
+    },
+    {
+      subject: "Biology",
+      icon: Dna,
+      theme: {
+        badge: "bg-rose-100 text-rose-800 border-rose-200",
+        iconBg: "bg-rose-50 text-rose-600 border-rose-200",
+        cardBorder: "hover:border-rose-300",
+        dot: "bg-rose-500",
+      },
+      topics: [
+        "Life Processes",
+        "Control and Coordination",
+        "How do Organisms Reproduce",
+        "Tissues in Action",
+        "Cells - The Building Block of Life",
+      ],
+    },
+    {
+      subject: "English",
+      icon: BookOpen,
+      theme: {
+        badge: "bg-purple-100 text-purple-800 border-purple-200",
+        iconBg: "bg-purple-50 text-purple-600 border-purple-200",
+        cardBorder: "hover:border-purple-300",
+        dot: "bg-purple-500",
+      },
+      topics: ["Basic Grammar"],
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-100/60 pb-12 sm:pb-16 overflow-hidden">
       {/* Full Screen Talent Test Hero Section */}
@@ -66,9 +158,9 @@ export default function TalentTestPage() {
                 Exam Syllabus & Model Question Paper
               </h3>
             </div>
-            <div className="inline-flex items-center space-x-2 text-xs font-black text-[#0b1f44] bg-amber-100 border border-amber-300 px-3.5 py-1.5 rounded-full w-fit">
-              <Clock className="h-3.5 w-3.5 shrink-0 text-amber-700" />
-              <span>To Be Given Soon</span>
+            <div className="inline-flex items-center space-x-2 text-xs font-black text-emerald-900 bg-emerald-100 border border-emerald-300 px-3.5 py-1.5 rounded-full w-fit">
+              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-700" />
+              <span>Syllabus Released</span>
             </div>
           </div>
 
@@ -97,27 +189,71 @@ export default function TalentTestPage() {
           </div>
 
           {/* Syllabus Scope */}
-          <div className="space-y-3.5 pt-1">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-black text-[#0b1f44] uppercase tracking-wider">
-                Syllabus
-              </h4>
-              <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-[#0b1f44] text-xs font-black uppercase tracking-wider shadow-xs">
-                <Clock className="h-3.5 w-3.5 text-amber-700" />
-                <span>To Be Given Soon</span>
+          <div className="space-y-4 pt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+              <div>
+                <h4 className="text-base sm:text-lg font-black text-[#0b1f44] uppercase tracking-wide">
+                  Official Exam Syllabus
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                  Detailed subject-wise topics for 10th standard (including foundational 9th standard chapters)
+                </p>
+              </div>
+              <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-black uppercase tracking-wider self-start sm:self-auto shadow-xs">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700" />
+                <span>5 Subjects Covered</span>
               </span>
             </div>
 
-            <div className="bg-slate-50/80 border border-dashed border-slate-300 rounded-2xl p-6 sm:p-8 text-center flex flex-col items-center justify-center space-y-2.5">
-              <div className="p-3 bg-amber-100 text-amber-700 rounded-full mb-1">
-                <Clock className="h-6 w-6" />
-              </div>
-              <h5 className="text-base sm:text-lg font-black text-[#0b1f44]">
-                To Be Given Soon
-              </h5>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-[50ch] leading-relaxed font-medium">
-                The detailed subject-wise syllabus scope and chapter blueprint for Class 10 (Physics, Chemistry, Mathematics & Biology) will be published here soon.
-              </p>
+            {/* Subject-Wise Syllabus Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-1">
+              {syllabusData.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={idx}
+                    className={`bg-slate-50/70 hover:bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 ${item.theme.cardBorder} transition-all duration-200 shadow-xs hover:shadow-md flex flex-col justify-between`}
+                  >
+                    <div>
+                      {/* Subject Card Header */}
+                      <div className="flex items-center justify-between pb-3.5 border-b border-slate-200/80 mb-4">
+                        <div className="flex items-center space-x-3">
+                          <div className={`p-2.5 rounded-xl border ${item.theme.iconBg}`}>
+                            <Icon className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h5 className="text-base sm:text-lg font-black text-[#0b1f44] uppercase tracking-tight">
+                              {item.subject}
+                            </h5>
+                            <span className="text-[11px] font-bold text-slate-500 block">
+                              {item.topics.length} {item.topics.length === 1 ? "Topic" : "Chapters"}
+                            </span>
+                          </div>
+                        </div>
+
+                        <span
+                          className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${item.theme.badge}`}
+                        >
+                          {item.subject}
+                        </span>
+                      </div>
+
+                      {/* Topic List */}
+                      <ul className="space-y-2">
+                        {item.topics.map((topic, tIdx) => (
+                          <li
+                            key={tIdx}
+                            className="flex items-start space-x-2.5 text-xs sm:text-sm text-slate-700 font-medium leading-snug"
+                          >
+                            <span className={`h-1.5 w-1.5 rounded-full ${item.theme.dot} mt-1.5 shrink-0`} />
+                            <span>{topic}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

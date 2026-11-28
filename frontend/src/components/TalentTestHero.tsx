@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { talentTestConfig } from "@/config/talentTest";
+import TalentButton from "@/components/TalentButton";
 
 interface TimeLeft {
   days: string;
@@ -94,14 +95,12 @@ export default function TalentTestHero() {
           </p>
 
           {/* Primary CTA Button */}
-          <div>
-            <a
+          <div className="pt-1">
+            <TalentButton
+              text="REGISTER FOR TALENT TEST"
               href={talentTestConfig.registerHref}
-              className="inline-flex items-center justify-center min-h-[48px] px-8 rounded-full bg-[#ffc233] hover:bg-[#eab020] text-[#0b1f44] font-black text-sm sm:text-base tracking-tight transition-all duration-200 shadow-md hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#ffc233]/50 cursor-pointer"
-              aria-label={`${talentTestConfig.buttonLabel} for MB Talent Test 2027`}
-            >
-              {talentTestConfig.buttonLabel}
-            </a>
+              size="lg"
+            />
           </div>
 
           {/* Quick Facts */}

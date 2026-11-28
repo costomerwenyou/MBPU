@@ -98,3 +98,34 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
+
+/* Talent Button Glow & Shimmer Keyframes */
+@keyframes talent-glow {
+  0%, 100% {
+    opacity: 0.75;
+    filter: blur(14px);
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(20px);
+    transform: scale(1.03);
+  }
+}
+
+.animate-talent-glow {
+  animation: talent-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes talent-shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  30%, 100% {
+    transform: translateX(220%);
+  }
+}
+
+.animate-talent-shimmer {
+  animation: talent-shimmer 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

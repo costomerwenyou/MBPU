@@ -71,11 +71,10 @@ export default function TalentTestSideTab() {
 
   return (
     <aside
-      className={`fixed right-0 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-300 motion-reduce:transition-opacity ${
-        isVisible
+      className={`fixed right-0 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-300 motion-reduce:transition-opacity ${isVisible
           ? "opacity-100 translate-x-0"
           : "opacity-0 translate-x-full pointer-events-none motion-reduce:translate-x-0"
-      }`}
+        }`}
       style={{
         paddingRight: "env(safe-area-inset-right, 0px)",
       }}
@@ -92,7 +91,7 @@ export default function TalentTestSideTab() {
           className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#ffc233] text-[#0b1f44] shrink-0 shadow-sm"
           aria-hidden="true"
         >
-          NEW
+          MB
         </span>
 
         {/* Vertical Text reading top-to-bottom */}
